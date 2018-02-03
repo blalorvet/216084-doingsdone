@@ -108,6 +108,7 @@ $show_complete_tasks = rand(0, 1);
 
                 <table class="tasks">
                     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
+                    <!-- добавил проверку-->
                     <?php if ($show_complete_tasks === 1)
                     {
                         echo ' <tr class="tasks__item task task--completed">

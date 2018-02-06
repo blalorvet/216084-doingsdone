@@ -56,11 +56,9 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
 
-
-
-
+<!-- Список проектов из простого массива -->
                         <?PHP while ($index < $num_count) { ?>
-                            <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active":""; ?>">
+                            <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : ""; ?>">
                                 <a class="main-navigation__list-item-link" href="#"> <?= ($categories[$index]); ?></a>
                                 <span class="main-navigation__list-item-count">24</span>
                             </li>
@@ -70,36 +68,31 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                         ?>
 
 
+                        <!--    <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#">Входящие</a>
+                                <span class="main-navigation__list-item-count">24</span>
+                            </li>
 
+                            <li class="main-navigation__list-item main-navigation__list-item--active">
+                                <a class="main-navigation__list-item-link" href="#">Работа</a>
+                                <span class="main-navigation__list-item-count">12</span>
+                            </li>
 
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#">Здоровье</a>
+                                <span class="main-navigation__list-item-count">3</span>
+                            </li>
 
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#">Домашние дела</a>
+                                <span class="main-navigation__list-item-count">7</span>
+                            </li>
 
-
-                    <!--    <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Входящие</a>
-                            <span class="main-navigation__list-item-count">24</span>
-                        </li>
-
-                        <li class="main-navigation__list-item main-navigation__list-item--active">
-                            <a class="main-navigation__list-item-link" href="#">Работа</a>
-                            <span class="main-navigation__list-item-count">12</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Здоровье</a>
-                            <span class="main-navigation__list-item-count">3</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Домашние дела</a>
-                            <span class="main-navigation__list-item-count">7</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Авто</a>
-                            <span class="main-navigation__list-item-count">0</span>
-                        </li>
-                        -->
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#">Авто</a>
+                                <span class="main-navigation__list-item-count">0</span>
+                            </li>
+                            -->
                     </ul>
                 </nav>
 
@@ -136,41 +129,32 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                 </div>
 
 
-
-
-                <?php foreach ($tasks as $key => $item) {?>
+                <!-- Цикл из массива, который создает список задач-->
+                <?php foreach ($tasks as $key => $item) { ?>
                 <table class="tasks">
 
 
-                    <tr class="tasks__item task <?= ($item['task_controls']==="Да")? "task--completed": "";?> ">
+                    <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" <?= ($item['task_controls']==="Да")? "checked": "";?> >
-                                <span class="checkbox__text"> <?= $item ['task_name'];?> </span>
+                                <input class="checkbox__input visually-hidden"
+                                       type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
+                                <span class="checkbox__text"> <?= $item ['task_name']; ?> </span>
                             </label>
                         </td>
-                        <td class="task__date"><?= $item ['task_date'];?></td>
+                        <td class="task__date"><?= $item ['task_date']; ?></td>
 
                         <td class="task__controls">
                         </td>
                     </tr>
-                    <? }?>
+                    <? } ?>
                 </table>
 
 
-
-
-
-
-
-
-
-
-
-   <!---             <table class="tasks">
-                    <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-                    <!-- добавил проверку-->
-                    <?php  //if ($show_complete_tasks === 1) : ?>
+                <!---             <table class="tasks">
+                                 <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
+                <!-- добавил проверку-->
+                <?php //if ($show_complete_tasks === 1) : ?>
                 <!--
     <tr class="tasks__item task task--completed">
     <td class="task__select">

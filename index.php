@@ -2,8 +2,6 @@
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 $categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
-$index = 0;
-$num_count = count($categories);
 $tasks[] = array("task_name" => "Собеседование в IT компании", "task_date" => "01.06.2018", "task_category" => "Работа", "task_controls" => "Нет");
 $tasks[] = array("task_name" => "Выполнить тестовое задание", "task_date" => "25.05.2018", "task_category" => "Работа", "task_controls" => "Нет");
 $tasks[] = array("task_name" => "Сделать задание первого раздела", "task_date" => "21.04.2018", "task_category" => "Учеба", "task_controls" => "Да");
@@ -56,43 +54,14 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
 
-<!-- Список проектов из простого массива -->
-                        <?PHP while ($index < $num_count) { ?>
+                        <!-- Список проектов из простого массива -->
+                        <?PHP foreach ($categories as $key) : ?>
                             <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : ""; ?>">
-                                <a class="main-navigation__list-item-link" href="#"> <?= ($categories[$index]); ?></a>
-                                <span class="main-navigation__list-item-count">24</span>
-                            </li>
-                            <? $index++;
-                        }
-
-                        ?>
-
-
-                        <!--    <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#">Входящие</a>
+                                <a class="main-navigation__list-item-link" href="#"> <?= $key; ?></a>
                                 <span class="main-navigation__list-item-count">24</span>
                             </li>
 
-                            <li class="main-navigation__list-item main-navigation__list-item--active">
-                                <a class="main-navigation__list-item-link" href="#">Работа</a>
-                                <span class="main-navigation__list-item-count">12</span>
-                            </li>
-
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#">Здоровье</a>
-                                <span class="main-navigation__list-item-count">3</span>
-                            </li>
-
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#">Домашние дела</a>
-                                <span class="main-navigation__list-item-count">7</span>
-                            </li>
-
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#">Авто</a>
-                                <span class="main-navigation__list-item-count">0</span>
-                            </li>
-                            -->
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -130,8 +99,26 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
 
 
                 <!-- Цикл из массива, который создает список задач-->
-                <?php foreach ($tasks as $key => $item) { ?>
                 <table class="tasks">
+
+                    <?php if ($show_complete_tasks === 1) : ?>
+
+    <tr class="tasks__item task task--completed">
+    <td class="task__select">
+        <label class="checkbox task__checkbox">
+            <input class="checkbox__input visually-hidden" type="checkbox" checked>
+            <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
+        </label>
+    </td>
+    <td class="task__date">10.04.2017</td>
+
+    <td class="task__controls">
+    </td>
+</tr>
+         <?php  endif   ?>
+
+                <?php foreach ($tasks as $key => $item) : ?>
+
 
 
                     <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
@@ -147,7 +134,7 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                         <td class="task__controls">
                         </td>
                     </tr>
-                    <? } ?>
+                    <?php endforeach; ?>
                 </table>
 
 

@@ -101,24 +101,8 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                 <!-- Цикл из массива, который создает список задач-->
                 <table class="tasks">
 
-                    <?php if ($show_complete_tasks === 1) : ?>
-
-    <tr class="tasks__item task task--completed">
-    <td class="task__select">
-        <label class="checkbox task__checkbox">
-            <input class="checkbox__input visually-hidden" type="checkbox" checked>
-            <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
-        </label>
-    </td>
-    <td class="task__date">10.04.2017</td>
-
-    <td class="task__controls">
-    </td>
-</tr>
-         <?php  endif   ?>
-
                 <?php foreach ($tasks as $key => $item) : ?>
-
+                    <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1  ) : ?>
 
 
                     <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
@@ -134,6 +118,7 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                         <td class="task__controls">
                         </td>
                     </tr>
+                    <?php  endif   ?>
                     <?php endforeach; ?>
                 </table>
 

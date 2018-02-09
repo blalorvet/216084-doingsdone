@@ -18,7 +18,9 @@ function calc_category($massif_fun, $category_fun)
         $sum_fun = count($massif_fun);
     } else {
         foreach ($massif_fun as $key => $item) {
-            $sum_fun += $item['task_category'] === $category_fun;
+             if ($item['task_category'] === $category_fun){
+                $sum_fun++;
+            }
         }
     }
     return $sum_fun;

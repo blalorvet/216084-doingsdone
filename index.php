@@ -9,6 +9,24 @@ $tasks[] = array("task_name" => "Встреча с другом", "task_date" =>
 $tasks[] = array("task_name" => "Купить корм для кота", "task_date" => "Нет", "task_category" => "Домашние дела", "task_controls" => "Нет");
 $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "Нет", "task_category" => "Домашние дела", "task_controls" => "Нет");
 
+
+function calc_category($massif_fun, $category_fun)
+
+{
+    $sum_fun = 0;
+    if ($category_fun === "Все") {
+        $sum_fun = count($massif_fun);
+    } else {
+        foreach ($massif_fun as $key => $item) {
+             if ($item['task_category'] === $category_fun){
+                $sum_fun++;
+            }
+        }
+    }
+    return $sum_fun;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -58,7 +76,8 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                         <?PHP foreach ($categories as $key) : ?>
                             <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : ""; ?>">
                                 <a class="main-navigation__list-item-link" href="#"> <?= $key; ?></a>
-                                <span class="main-navigation__list-item-count">24</span>
+                                <span
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $key); ?></span>
                             </li>
 
                         <?php endforeach; ?>
@@ -101,24 +120,24 @@ $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "�
                 <!-- Цикл из массива, который создает список задач  и выводит активыные и нет задачи-->
                 <table class="tasks">
 
-                <?php foreach ($tasks as $key => $item) : ?>
-                    <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1  ) : ?>
+                    <?php foreach ($tasks as $key => $item) : ?>
+                        <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1) : ?>
 
 
-                    <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden"
-                                       type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
-                                <span class="checkbox__text"> <?= $item ['task_name']; ?> </span>
-                            </label>
-                        </td>
-                        <td class="task__date"><?= $item ['task_date']; ?></td>
+                            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
+                                <td class="task__select">
+                                    <label class="checkbox task__checkbox">
+                                        <input class="checkbox__input visually-hidden"
+                                               type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
+                                        <span class="checkbox__text"> <?= $item ['task_name']; ?> </span>
+                                    </label>
+                                </td>
+                                <td class="task__date"><?= $item ['task_date']; ?></td>
 
-                        <td class="task__controls">
-                        </td>
-                    </tr>
-                    <?php  endif   ?>
+                                <td class="task__controls">
+                                </td>
+                            </tr>
+                        <?php endif ?>
                     <?php endforeach; ?>
                 </table>
 

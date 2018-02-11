@@ -7,7 +7,7 @@ $tasks[] = array("task_name" => "Собеседование в IT компани
 $tasks[] = array("task_name" => "Выполнить тестовое задание", "task_date" => "25.05.2018", "task_category" => "Работа", "task_controls" => "Нет");
 $tasks[] = array("task_name" => "Сделать задание первого раздела", "task_date" => "21.04.2018", "task_category" => "Учеба", "task_controls" => "Да");
 $tasks[] = array("task_name" => "Встреча с другом", "task_date" => "22.04.2018", "task_category" => "Входящие", "task_controls" => "Нет");
-$tasks[] = array("task_name" => "Купить корм для кота", "task_date" => "Нет", "task_category" => "Домашние дела", "task_controls" => "Нет");
+$tasks[] = array("task_name" => "Купить корм для кота", "task_date" => "11.02.2018", "task_category" => "Домашние дела", "task_controls" => "Нет");
 $tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "Нет", "task_category" => "Домашние дела", "task_controls" => "Нет");
 
 

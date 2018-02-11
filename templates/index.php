@@ -25,6 +25,8 @@
             <input class="checkbox__input visually-hidden"
                    type="checkbox" <?= ($show_complete_tasks === 1) ? "checked" : ""; ?> >
             <span class="checkbox__text">Показывать выполненные</span>
+
+
         </a>
     </label>
 </div>
@@ -36,15 +38,15 @@
         <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1) : ?>
 
 
-            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; ?> ">
+            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden"
                                type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
-                        <span class="checkbox__text"> <?= $item ['task_name']; ?> </span>
+                        <span class="checkbox__text"> <?= html_sc($item ['task_name']); ?> </span>
                     </label>
                 </td>
-                <td class="task__date"><?= $item ['task_date']; ?></td>
+                <td class="task__date"><?= html_sc($item ['task_date']); ?></td>
 
                 <td class="task__controls">
                 </td>

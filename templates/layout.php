@@ -51,10 +51,10 @@
 
                         <!-- Список проектов из простого массива -->
                         <?PHP foreach ($categories as $index => $category) : ?>
-                            <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : ""; ?>">
-                                <a class="main-navigation__list-item-link" href="#"> <?= $category; ?></a>
+                            <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : "";  ?>">
+                                <a class="main-navigation__list-item-link" href="#"> <?= html_sc($category); ?></a>
                                 <span
-                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category); ?></span>
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span>
                             </li>
 
                         <?php endforeach; ?>

@@ -29,3 +29,10 @@ function calc_category($massif_fun, $category_fun)
     }
     return $sum_fun;
 }
+
+function html_sc($str) {
+    $text = htmlspecialchars($str);
+    //$text = strip_tags($str);
+
+    return $text;
+}

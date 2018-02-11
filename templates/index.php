@@ -41,10 +41,10 @@
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden"
                                type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
-                        <span class="checkbox__text"> <?= $item ['task_name']; ?> </span>
+                        <span class="checkbox__text"> <?= html_sc($item ['task_name']); ?> </span>
                     </label>
                 </td>
-                <td class="task__date"><?= $item ['task_date']; ?></td>
+                <td class="task__date"><?= html_sc($item ['task_date']); ?></td>
 
                 <td class="task__controls">
                 </td>

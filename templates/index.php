@@ -38,7 +38,7 @@
         <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1) : ?>
 
 
-            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : ""; echo html_sc(data_calc($item ['task_date']));?> ">
+            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden"

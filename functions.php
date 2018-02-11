@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @param $template_path - путь до файла
+ * @param $template_data - переменная в которую мы будем отправлять страницу
+ * @return string - возвращает содержимое буфера
+ */
 function render($template_path, $template_data) // функция render с двумя аргументами - $template_path путь до файла, $template_data - переменная в которую мы будем отправлять страницу
 {
     if (!file_exists($template_path)) { // осуществляем проверку для $template_path существует ли такой файл, если нет возвращаем пустую строчку ""
@@ -13,7 +17,12 @@ function render($template_path, $template_data) // функция render с дв
 
 }
 
-
+/**
+ * функция подсчитывае общее количество задачь
+ * @param $massif_fun - в  эту переменную отправляется массив
+ * @param $category_fun - в эту переменную отправляется ключ массива
+ * @return int - возвращает обшее количество задачь
+ */
 function calc_category($massif_fun, $category_fun)
 
 {
@@ -39,18 +48,26 @@ function html_sc($str)
     return $text;
 }
 
-//Функция подсчета разницы между текущей датой и датой задачи
-function data_calc($task_data_calc)
+
+/**
+ * Функция подсчета разницы между текущей датой и датой задачи
+ * @param $task_data_calc string дата в формате d.m.Y
+ * @return string возвращает название класса важной задачи task--important или пустую строку
+ */
+function get_important_task_class_name($task_data_calc)
 {
+    $result="";
     if (!($task_date_calc = strtotime($task_data_calc)) === false) {
-        $task_data_floor = floor(strtotime($task_data_calc));
-        $cur_data = floor(strtotime(date('d.m.y.')));
+        $task_data = (strtotime($task_data_calc));
+        $cur_data = (strtotime("now"));
 
-        if ((($task_data_floor - $cur_data) / 86400) <= 1) {
+        if ((($task_data - $cur_data) / 86400) <= 1) {
 
-            return 'task--important';
+            $result ='task--important';
 
 
         }
+
     }
+    return  $result;
 }

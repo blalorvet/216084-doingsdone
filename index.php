@@ -3,17 +3,96 @@
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 $categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
-$tasks[] = array("task_name" => "Собеседование в IT компании", "task_date" => "01.06.2018", "task_category" => "Работа", "task_controls" => "Нет");
-$tasks[] = array("task_name" => "Выполнить тестовое задание", "task_date" => "25.05.2018", "task_category" => "Работа", "task_controls" => "Нет");
-$tasks[] = array("task_name" => "Сделать задание первого раздела", "task_date" => "21.04.2018", "task_category" => "Учеба", "task_controls" => "Да");
-$tasks[] = array("task_name" => "Встреча с другом", "task_date" => "22.04.2018", "task_category" => "Входящие", "task_controls" => "Нет");
-$tasks[] = array("task_name" => "Купить корм для кота", "task_date" => "11.02.2018", "task_category" => "Домашние дела", "task_controls" => "Нет");
-$tasks[] = array("task_name" => "Заказать пиццу", "task_date" => "Нет", "task_category" => "Домашние дела", "task_controls" => "Нет");
+$tasks = [];
+$tasks[] = array(
+    "task_name" => "Собеседование в IT компании",
+    "task_date" => "01.06.2018",
+    "task_category" => "Работа",
+    "task_controls" => "Нет"
+);
+$tasks[] = array(
+    "task_name" => "Выполнить тестовое задание",
+    "task_date" => "25.05.2018",
+    "task_category" => "Работа",
+    "task_controls" => "Нет"
+);
+$tasks[] = array(
+    "task_name" => "Сделать задание первого раздела",
+    "task_date" => "21.04.2018",
+    "task_category" => "Учеба",
+    "task_controls" => "Да"
+);
+$tasks[] = array(
+    "task_name" => "Встреча с другом",
+    "task_date" => "22.04.2018",
+    "task_category" => "Входящие",
+    "task_controls" => "Нет"
+);
+$tasks[] = array(
+    "task_name" => "Купить корм для кота",
+    "task_date" => "11.02.2018",
+    "task_category" => "Домашние дела",
+    "task_controls" => "Нет"
+);
+$tasks[] = array(
+    "task_name" => "Заказать пиццу",
+    "task_date" => "Нет",
+    "task_category" => "Домашние дела",
+    "task_controls" => "Нет"
+);
 
 
 require_once('functions.php');// вызваем файл с функциями
 
-$page_content = render('templates/index.php', ['tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks]);// вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
+$filtered_task = [];
+
+
+if (empty($_GET['category'])) {
+    print("Если get запрос пустой то выводим все задачи как раньше");
+    $filtered_task = $tasks;
+} else {
+    if (isset($_GET['category'])) {
+        $category_get_id = $_GET['category'];
+        floor($category_get_id);// приводим  к целому числу
+//        print($categories[$category_get_id]);
+
+
+        if ($categories[$category_get_id] === $categories[0]) {
+            $filtered_task = $tasks;
+            print("Равно нулю строка 60");
+        }
+        print in_array($categories[$category_get_id], $categories);
+
+
+        foreach ($tasks as $key => $task) {
+
+            if (in_array($categories[$category_get_id], $categories) != 1) {
+                print ("Такой страницы не существует 404 <br>");
+                break;
+            }
+
+
+            if ($task['task_category'] === $categories[$category_get_id]) {
+                $filtered_task[] = $task;
+//                print ("Вывод задач");
+//                print ($task['task_category']);
+
+            }
+        }
+
+
+    }
+}
+//print ("<br>");
+//print_r($filtered_task);
+
+
+$page_content = render('templates/index.php', [
+    'tasks' => $filtered_task,
+    'show_complete_tasks' => $show_complete_tasks
+]);
+
+// вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
 
 $layout_content = render('templates/layout.php', [
     'content' => $page_content,
@@ -24,4 +103,7 @@ $layout_content = render('templates/layout.php', [
 
 ]);
 
-print($layout_content); // выводим весь собраныый контент на страницу из шаблонов
+print($layout_content);
+// выводим весь собраныый контент на страницу из шаблонов
+
+

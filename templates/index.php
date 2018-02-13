@@ -25,6 +25,22 @@
             <input class="checkbox__input visually-hidden"
                    type="checkbox" <?= ($show_complete_tasks === 1) ? "checked" : ""; ?> >
             <span class="checkbox__text">Показывать выполненные</span>
+            <?php
+            $id=null;
+
+            if (isset($_GET['category'])) {
+                $category_id = $_GET['category'];
+                print ("<b>$category_id</b>");
+
+            }
+            if (!category) {
+                print ("http_response_code(404)");
+            }
+
+
+
+
+            ?>
 
 
         </a>
@@ -36,8 +52,6 @@
 
     <?php foreach ($tasks as $key => $item) : ?>
         <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1) : ?>
-
-
             <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">

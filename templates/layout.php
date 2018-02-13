@@ -4,6 +4,7 @@
 /** @var $categories string[]*/
 /** @var $tasks []*/
 
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -52,7 +53,8 @@
                         <!-- Список проектов из простого массива -->
                         <?PHP foreach ($categories as $index => $category) : ?>
                             <li class="main-navigation__list-item <?= ($index === 0) ? "main-navigation__list-item--active" : "";  ?>">
-                                <a class="main-navigation__list-item-link" href="#"> <?= html_sc($category); ?></a>
+<!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
+                                <a class="main-navigation__list-item-link" href="?category=<?= $id_categories = array_search($category, $categories); ?>" > <?= html_sc($category); ?>  </a>
                                 <span
                                     class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span>
                             </li>

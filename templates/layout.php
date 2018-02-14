@@ -52,11 +52,12 @@
 
                         <!-- Список проектов из простого массива -->
                         <?PHP foreach ($categories as $index => $category) : ?>
-                            <li class="main-navigation__list-item <?= ($index === $category_get_id) ? "main-navigation__list-item--active" : "";  ?>">
+                            <?//= gettype($category_get_id) ?>
+                            <li class="main-navigation__list-item <?= ($index === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
 <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
-                                <a class="main-navigation__list-item-link" href="?category=<?= $id_categories = array_search($category, $categories); ?>" > <?= html_sc($category); ?>  </a>
+                                <a class="main-navigation__list-item-link" href="?category=<?= $index; ?>" > <?= html_sc($category); ?>  </a>
                                 <span
-                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span> <?= $index ?>
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span>
                             </li>
 
                         <?php endforeach; ?>
@@ -65,7 +66,7 @@
 
                 <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
             </section>
-            <?= $category_get_id ?>
+
 
             <main class="content__main">
 

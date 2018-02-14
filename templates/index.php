@@ -25,22 +25,7 @@
             <input class="checkbox__input visually-hidden"
                    type="checkbox" <?= ($show_complete_tasks === 1) ? "checked" : ""; ?> >
             <span class="checkbox__text">Показывать выполненные</span>
-            <?php
-            $id=null;
 
-            if (isset($_GET['category'])) {
-                $category_id = $_GET['category'];
-                print ("<b>$category_id</b>");
-
-            }
-            if (!category) {
-                print ("http_response_code(404)");
-            }
-
-
-
-
-            ?>
 
 
         </a>

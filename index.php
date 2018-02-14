@@ -45,55 +45,48 @@ $tasks[] = array(
 require_once('functions.php');// вызваем файл с функциями
 
 $filtered_task = [];
+$way_to_page = 'templates/index.php';
 
 
-if (empty($_GET['category'])) {
-    print("Если get запрос пустой то выводим все задачи как раньше");
-    $filtered_task = $tasks;
+if (!isset($_GET['category'])) {  // вернет истину если нет параметра или параметр равен null, ноль, пустая строка или строка из нуля Тут если запрос пустой то выводим все задачи
+     $filtered_task = $tasks;
 } else {
-    if (isset($_GET['category'])) {
-        $category_get_id = (int)$_GET['category'];// приводим  к целому числу
-        print('приведение к целому  - ');
-        print($category_get_id);
-        print('<br>');
+
+    $category_get_id = (int)$_GET['category'];// приводим  к целому числу
 
 
-        if ($categories[$category_get_id] === $categories[0]) {
-            $filtered_task = $tasks;
-            print("Равно нулю ");
-        }
-        print in_array($categories[$category_get_id], $categories);
-
-
-        foreach ($tasks as $key => $task) {
-
-            if (in_array($categories[$category_get_id], $categories) != 1) {
-                print ("Такой страницы не существует 404 <br>");
-                break;
-            }
-
-
-            if ($task['task_category'] === $categories[$category_get_id]) {
-                $filtered_task[] = $task;
-//                print ("Вывод задач");
-//                print ($task['task_category']);
-
-            }
-        }
-
+    if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
+        $filtered_task = $tasks;
 
     }
+
+
+    foreach ($tasks as $key => $task) {
+
+        if (in_array($categories[$category_get_id], $categories) != 1) {
+            $way_to_page = 'templates/error.php';
+            break;
+        }
+
+
+        if ($task['task_category'] === $categories[$category_get_id]) {
+            $filtered_task[] = $task;
+
+
+        }
+    }
+
+
 }
-//print ("<br>");
-//print_r($filtered_task);
 
+// вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
 
-$page_content = render('templates/index.php', [
+$page_content = render($way_to_page, [
     'tasks' => $filtered_task,
     'show_complete_tasks' => $show_complete_tasks
 ]);
 
-// вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
+//вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
 
 $layout_content = render('templates/layout.php', [
     'content' => $page_content,
@@ -101,7 +94,6 @@ $layout_content = render('templates/layout.php', [
     'title' => 'Дела в порядке',
     'tasks' => $tasks,
     'category_get_id' => $category_get_id
-//вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
 
 ]);
 

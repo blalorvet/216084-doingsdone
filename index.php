@@ -52,14 +52,15 @@ if (empty($_GET['category'])) {
     $filtered_task = $tasks;
 } else {
     if (isset($_GET['category'])) {
-        $category_get_id = $_GET['category'];
-        floor($category_get_id);// приводим  к целому числу
-//        print($categories[$category_get_id]);
+        $category_get_id = (int)$_GET['category'];// приводим  к целому числу
+        print('приведение к целому  - ');
+        print($category_get_id);
+        print('<br>');
 
 
         if ($categories[$category_get_id] === $categories[0]) {
             $filtered_task = $tasks;
-            print("Равно нулю строка 60");
+            print("Равно нулю ");
         }
         print in_array($categories[$category_get_id], $categories);
 
@@ -98,7 +99,8 @@ $layout_content = render('templates/layout.php', [
     'content' => $page_content,
     'categories' => $categories,
     'title' => 'Дела в порядке',
-    'tasks' => $tasks
+    'tasks' => $tasks,
+    'category_get_id' => $category_get_id
 //вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
 
 ]);

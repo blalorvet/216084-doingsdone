@@ -3,6 +3,8 @@
 /** @var $content string*/
 /** @var $categories string[]*/
 /** @var $tasks []*/
+/** @var $body_overlay []*/
+
 
 
 ?>
@@ -16,7 +18,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body><!--class="overlay"-->
+<body <?= $body_overlay ?>><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -27,7 +29,7 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="/?add_task">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -90,7 +92,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus">Добавить задачу</a>
+        <a class="main-footer__button button button--plus"  href="/?add_task" >Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>

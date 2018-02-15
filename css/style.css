@@ -340,6 +340,16 @@ a:focus {
   margin-bottom: 25px;
 }
 
+.content__error {
+  margin: 0;
+  margin-bottom: 25px;
+  text-align: center;
+  margin-top: 80px;
+  font-size: x-large;
+  font-weight: 600;
+
+}
+
 .search-form {
   position: relative;
 

@@ -48,27 +48,23 @@ require_once('functions.php');// вызваем файл с функциями
 $filtered_task = [];
 $way_to_page = 'templates/index.php';
 
+$test_error ='ошибки грузим';
+    $test_not_error ='ошибки не загружаем';
+
 
 if (!isset($_GET['category'])) {  // вернет истину если нет параметра или параметр равен null, ноль, пустая строка или строка из нуля Тут если запрос пустой то выводим все задачи
     $filtered_task = $tasks;
 } else {
-
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
-
 
     if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
         $filtered_task = $tasks;
-
     }
-
-
     foreach ($tasks as $key => $task) {
-
         if (in_array($categories[$category_get_id], $categories) != 1) {
             $way_to_page = 'templates/error.php';
             break;
         }
-
 
         if ($task['task_category'] === $categories[$category_get_id]) {
             $filtered_task[] = $task;
@@ -83,33 +79,45 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 $add_new_task = [];
 $add_task = null;
 $path = [];
-$popap_add_task = '';
-// Вначале убедимся, что форма была отправлена. Для этого проверяем метод, которым была запрошена страница. Если метод POST - значит этот сценарий был вызван отправкой формы
+$popap_add_task = 'templates/form_task.php';
+
+
+
+// Проверяем есть ли в строке запрос add_task
 if (isset($_GET['add_task'])) {
-    print($add_task);
-    $popap_add_task = 'templates/form_task.php';
     $body_overlay = 'class="overlay" ';
     print($body_overlay);
-
+}
 //    Вначале убедимся, что форма была отправлена. Для этого проверяем метод, которым была запрошена страница. Если метод POST - значит этот сценарий был вызван отправкой формы
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    print('проверка пост');
 
-        if (isset($_POST['name']['project']['preview'])) {
-            $add_new_task = $_POST;
+   // print_r($_SERVER);
+    print('загрузка пост<br>');
+        $required = ['name', 'project'];
+        $dict = ['name' => 'Название', 'project' => 'Описание'];
+        $errors = [];
+    $test_add = $_SERVER['HTTP_REFERER'];
+        print($test_add);
 
-            $required = ['name', 'project', 'preview'];
-            $dict = ['name' => 'Название', 'project' => 'Описание', 'preview' => 'Файл'];
-            $errors = [];
-            print_r($add_new_task);
-            print_r($dict);
-        }
+
+
+
+//        print_r($dict);
+        print_r($required);
+
+
+
 //        Обходим массив $_POST. Здесь в переменной $key будет имя поля (из аттрибута name). Далее мы проверяем существование каждого поля в списке обязательных к заполнению. И если оно там есть, а также поле не заполнено, то добавляем ошибку валидации в список ошибок
         foreach ($required as $key) {
             if (empty($_POST[$key])) {
                 $errors[$key] = 'Это поле надо заполнить';
+
             }
         }
-        print_r($errors);
+    print('загрузка ошибок<br>');
+    print_r($errors);
+
 ////        Проверим, был ли загружен файл. Поле для загрузки файла в форме называется 'gif_img', поэтому нам следует искать в массиве $_FILES одноименный ключ. Если таковой найден, то мы можем получить имя загруженного файла
 //        if (isset($_FILES['preview']['name'])) {
 //            $tmp_name = $_FILES['preview']['tmp_name'];
@@ -134,30 +142,50 @@ if (isset($_GET['add_task'])) {
 //            $errors['file'] = 'Вы не загрузили файл';
 //        }
 ////        Здесь мы проверяем длину массива с ошибками. Если он не пустой, значит были ошибки и мы должны показать их пользователю вместе с формой. Для этого подключаем шаблон формы и передаем туда массив, где будут заполненные поля, а также список ошибок
+
+
+
         if (count($errors)) {
-            $show_popap_add_task = render('$popap_add_task', ['errors' => $errors, 'dict' => $dict]);
-        } //        Если массив ошибок пуст, значит валидации прошла успешно. По сценарию в этом случае показываем страницу просмотра гифки, где будут данные из формы
-        else {
+            print('<br> если ошибки есть передаем массив в попап<br>');
             $show_popap_add_task = render($popap_add_task, [
-
+                'errors' => $errors,
+                'dict' => $dict,
                 'categories' => $categories,
-                'show_complete_tasks' => $show_complete_tasks
+                'test_error' => $test_error
             ]);
+            print_r($errors);
         }
+// //        Если массив ошибок пуст, значит валидации прошла успешно. По сценарию в этом случае показываем страницу просмотра гифки, где будут данные из формы
+//        else {
+//            print('если ошибок нет');
+//        $show_popap_add_task = render($popap_add_task, [
+//            'errors' => $errors,
+//            'categories' => $categories,
+//            'show_complete_tasks' => $show_complete_tasks
+//        ]);
+//    }
+//    }
+//
+} ////    Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
+//else {
+//    print('не пост');
+//
+//    ]);
+//}
+
+
+//}
+//
+
+//$add_new_task = $_POST;
 //
 //
-    }
-////    Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
-        else {
-                $show_popap_add_task = render($popap_add_task, [
+////$errors = ['name']['project']['date']['preview'];
+//print_r($errors);
+//print('<br>');
+//print_r($add_new_task);
+//print('<br>');
 
-                    'categories' => $categories,
-                    'show_complete_tasks' => $show_complete_tasks
-                ]);
-            }
-
-
-    }
 
 
 //$show_popap_add_task = render($popap_add_task, [
@@ -169,23 +197,32 @@ if (isset($_GET['add_task'])) {
 
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
 
-    $page_content = render($way_to_page, [
-        'show_popap_add_task' => $show_popap_add_task,
-        'tasks' => $filtered_task,
-        'show_complete_tasks' => $show_complete_tasks
 
-    ]);
+$show_popap_add_task = render($popap_add_task, [
+    'errors' => $errors,
+    'categories' => $categories,
+    'show_complete_tasks' => $show_complete_tasks,
+    'test_not_error' => $test_not_error
+]);
+
+
+$page_content = render($way_to_page, [
+    'show_popap_add_task' => $show_popap_add_task,
+    'tasks' => $filtered_task,
+    'show_complete_tasks' => $show_complete_tasks
+
+]);
 
 //вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
 
-    $layout_content = render('templates/layout.php', [
-        'body_overlay' => $body_overlay,
-        'content' => $page_content,
-        'categories' => $categories,
-        'title' => 'Дела в порядке',
-        'tasks' => $tasks,
-        'category_get_id' => $category_get_id
+$layout_content = render('templates/layout.php', [
+    'body_overlay' => $body_overlay,
+    'content' => $page_content,
+    'categories' => $categories,
+    'title' => 'Дела в порядке',
+    'tasks' => $tasks,
+    'category_get_id' => $category_get_id
 
-    ]);
+]);
 // выводим весь собраныый контент на страницу из шаблонов
-    print($layout_content);
+print($layout_content);

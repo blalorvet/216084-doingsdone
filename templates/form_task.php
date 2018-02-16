@@ -9,11 +9,17 @@
 
     <h2 class="modal__heading">Добавление задачи</h2>
 
-    <form class="form" action="index.php" method="post">
+
+    <form class="form" action="/index.php" method="post">
 
 
         <?php $classname = isset($errors['name']) ? "form__input--error" : "";
-        $value = isset($add_new_task['name']) ? $add_new_task['name'] : ""; ?>
+        $value = isset($add_new_task['name']) ? $add_new_task['name'] : "";
+        ?>
+        <?= print_r($errors);?>
+        <?= print($errors['name']);?>
+        <?= $test_error; ?>
+        <?= $test_not_error; ?>
 
 
         <div class="form__row">
@@ -28,7 +34,7 @@
             <select class="form__input form__input--select" name="project" id="project" >
                 <option value="">Выберите проект</option>
                 <?PHP foreach ($categories as $index => $category) : ?>
-                    <option value=""><?= $category; ?></option>
+                    <option value="<?= $category; ?>"><?= $category; ?></option>
                 <?php endforeach; ?>
 
 

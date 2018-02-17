@@ -193,24 +193,7 @@ if (isset($_GET['add_task']) || (count($errors))) {
 //}
 
 
-//}
-//
 
-//$add_new_task = $_POST;
-//
-//
-////$errors = ['name']['project']['date']['preview'];
-//print_r($errors);
-//print('<br>');
-//print_r($add_new_task);
-//print('<br>');
-
-
-//$show_popap_add_task = render($popap_add_task, [
-//
-//    'categories' => $categories,
-//    'show_complete_tasks' => $show_complete_tasks
-//]);
 
 
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks

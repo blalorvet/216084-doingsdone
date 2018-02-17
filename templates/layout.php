@@ -3,7 +3,7 @@
 /** @var $content string*/
 /** @var $categories string[]*/
 /** @var $tasks []*/
-/** @var $body_overlay []*/
+/** @var  $body_overlay_class string*/
 
 
 
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body <?= $body_overlay ?>><!--class="overlay"-->
+<body class="<?= $body_overlay_class ?>" ><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -75,15 +75,12 @@
                 <?= $content; ?>
 
 
-
-
-
-
             </main>
+
         </div>
     </div>
 </div>
-
+<?= $popap_add_task?>
 <footer class="main-footer">
     <div class="container">
         <div class="main-footer__copyright">

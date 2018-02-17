@@ -1,6 +1,6 @@
 <?php
 /** @var $categories string[] */
-/** @var $dict string[] */
+/** @var $task_fields string[] */
 /** @var $errors string[] */
 ?>
 
@@ -25,7 +25,13 @@
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-            <input class="form__input <?= $classname ?> " type="text" name="name" id="name" value="<?=$value;?>" placeholder="Введите название">
+            <input
+                class="form__input <?= $classname ?> "
+                type="text"
+                name="name"
+                id="name"
+                value="<?= isset($task_fields['name']) ? $task_fields['name']: "" ;?>"
+                placeholder="Введите название">
         </div>
 
         <div class="form__row">
@@ -34,7 +40,11 @@
             <select class="form__input form__input--select" name="project" id="project" >
                 <option value="">Выберите проект</option>
                 <?PHP foreach ($categories as $index => $category) : ?>
-                    <option value="<?= $category; ?>"><?= $category; ?></option>
+                    <option
+                        value="<?= $category; ?>">
+                        <?= $category; ?>
+                        <?= isset($task_fields['project'])&& $task_fields['project']=$category ? 'selected' :"" ?>
+                    </option>
                 <?php endforeach; ?>
 
 

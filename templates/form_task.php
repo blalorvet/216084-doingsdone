@@ -13,20 +13,15 @@
     <form class="form" action="/index.php" method="post">
 
 
-        <?php $classname = isset($errors['name']) ? "form__input--error" : "";
+        <?php $class_name = isset($errors['name']) ? "form__input--error" : "";
         $value = isset($add_new_task['name']) ? $add_new_task['name'] : "";
         ?>
-        <?= print_r($errors);?>
-        <?= print($errors['name']);?>
-        <?= $test_error; ?>
-        <?= $test_not_error; ?>
-
 
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
             <input
-                class="form__input <?= $classname ?> "
+                class="form__input <?= $class_name ?> "
                 type="text"
                 name="name"
                 id="name"
@@ -34,10 +29,14 @@
                 placeholder="Введите название">
         </div>
 
+        <?php $class_project = isset($errors['project']) ? "form__input--error" : "";
+        $value = isset($add_new_task['project']) ? $add_new_task['project'] : "";
+        ?>
+
         <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-            <select class="form__input form__input--select" name="project" id="project" >
+            <select class="form__input form__input--select <?= $class_project ?> " name="project" id="project"  >
                 <option value="">Выберите проект</option>
                 <?PHP foreach ($categories as $index => $category) : ?>
                     <option

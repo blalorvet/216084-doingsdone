@@ -84,10 +84,11 @@ $popap_add_task = '';
 $errors = [];
 $task_fields = [];
 
+// Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
 
     $required = ['name', 'project'];
-
+//В цикле проверяем заполнены поля или нет, елси не заполнены то передаем значение не заполненного поля в масси Errors
     foreach ($required as $key) {
 
         if (empty($_POST[$key])) {
@@ -97,13 +98,28 @@ if (isset($_POST['add_task'])) {
         }
         else{
             $task_fields[$key] = $_POST[$key];
+//
+            
         }
     }
+    print('$_POST --');
+    print_r( $_POST);
+    print('<br>');
 
+    print( '$_POST add_task --');
+print_r( $_POST['add_task']);
+    print('<br>');
+
+    print( 'POST key --');
+    print_r( $_POST[$key]);
+    print('<br>');
+
+    print( 'task_fields --');
+    print_r( $task_fields[$key]);
 }
 
 
-// Проверяем есть ли в строке запрос add_task
+// Проверяем есть ли в строке запрос add_task и если есть то показываем попап
 if (isset($_GET['add_task']) || (count($errors))) {
     $popap_add_task = render('templates/form_task.php', [
         'errors' => $errors,
@@ -113,31 +129,6 @@ if (isset($_GET['add_task']) || (count($errors))) {
 }
 
 
-////    Вначале убедимся, что форма была отправлена. Для этого проверяем метод, которым была запрошена страница. Если метод POST - значит этот сценарий был вызван отправкой формы
-//if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//    print('проверка пост');
-//
-//    // print_r($_SERVER);
-//    print('загрузка пост<br>');
-//    $required = ['name', 'project'];
-//    $errors = [];
-//    $test_add = $_SERVER['HTTP_REFERER'];
-//    print($test_add);
-//
-//
-////        print_r($dict);
-//    print_r($required);
-//
-//
-////        Обходим массив $_POST. Здесь в переменной $key будет имя поля (из аттрибута name). Далее мы проверяем существование каждого поля в списке обязательных к заполнению. И если оно там есть, а также поле не заполнено, то добавляем ошибку валидации в список ошибок
-//    foreach ($required as $key) {
-//        if (empty($_POST[$key])) {
-//            $errors[$key] = 'Это поле надо заполнить';
-//
-//        }
-//    }
-//    print('загрузка ошибок<br>');
-//    print_r($errors);
 
 ////        Проверим, был ли загружен файл. Поле для загрузки файла в форме называется 'gif_img', поэтому нам следует искать в массиве $_FILES одноименный ключ. Если таковой найден, то мы можем получить имя загруженного файла
 //        if (isset($_FILES['preview']['name'])) {
@@ -174,23 +165,8 @@ if (isset($_GET['add_task']) || (count($errors))) {
 //        ]);
 //        print_r($errors);
 //    }
-// //        Если массив ошибок пуст, значит валидации прошла успешно. По сценарию в этом случае показываем страницу просмотра гифки, где будут данные из формы
-//        else {
-//            print('если ошибок нет');
-//        $show_popap_add_task = render($popap_add_task, [
-//            'errors' => $errors,
-//            'categories' => $categories,
-//            'show_complete_tasks' => $show_complete_tasks
-//        ]);
-//    }
-//    }
-//
- ////    Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
-//else {
-//    print('не пост');
-//
-//    ]);
-//}
+
+
 
 
 
@@ -200,6 +176,7 @@ if (isset($_GET['add_task']) || (count($errors))) {
 
 
 $show_popap_add_task = render($popap_add_task, [
+
     'errors' => $errors,
     'categories' => $categories,
     'show_complete_tasks' => $show_complete_tasks,
@@ -217,6 +194,7 @@ $page_content = render($way_to_page, [
 //вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
 
 $layout_content = render('templates/layout.php', [
+
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",
     'popap_add_task' => $popap_add_task,
     'content' => $page_content,

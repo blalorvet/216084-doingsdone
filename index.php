@@ -81,31 +81,17 @@ if (isset($_POST['add_task'])) {
     }
     if (empty($errors)) {
 
-//        $tasks[] = array(// функция добавление элемента в начале массива
-//            "task_name" => $_POST['name'],
-//            "task_date" => $_POST['date'],
-//            "task_category" => $_POST['project']
-//        );
-
-//        $add_new_task = array(// функция добавление элемента в начале массива
-//            "task_name" => $_POST['name'],
-//            "task_date" => $_POST['date'],
-//            "task_category" => $_POST['project']
-//        );
-
-        array_unshift($tasks, array(// функция добавление элемента в начале массива
+        array_unshift($tasks, array(// добавляем новую задачу в начало массива задачь
                 "task_name" => $_POST['name'],
                 "task_date" => $_POST['date'],
                 "task_category" => $_POST['project']
             )
         );
 
-
-        if (isset($_FILES['preview']['name'])) {
+        if (isset($_FILES['preview']['name'])) { // Загрузка файла в корневую дирректорию
 
             $path = $_FILES['preview']['name'];
             $res = move_uploaded_file($_FILES['preview']['tmp_name'], '' . $path);
-
 
         }
 
@@ -152,8 +138,6 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 
 
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
-
-
 $show_popap_add_task = render($popap_add_task, [
 
     'errors' => $errors,
@@ -171,7 +155,6 @@ $page_content = render($way_to_page, [
 ]);
 
 //вызываем функцию render в первом аргументе указываем путь 'templates/layout.php' во втором аргументе передаем массив с данными и переменными, которые будут присутствовать в загружаемом шаблоне [    'content' => $page_content,     'categories' => $categories,    'title' => 'Дела в порядке',    'tasks' => $tasks]
-
 $layout_content = render('templates/layout.php', [
 
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",

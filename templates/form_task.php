@@ -15,6 +15,7 @@
 
         <?php $class_name = isset($errors['name']) ? "form__input--error" : "";
         $value = isset($add_new_task['name']) ? $add_new_task['name'] : "";
+
         ?>
 
         <div class="form__row">
@@ -27,6 +28,7 @@
                 id="name"
                 value="<?= isset($task_fields['name']) ? $task_fields['name']: "" ;?>"
                 placeholder="Введите название">
+            <p class="<?= isset($errors['name'])? "form__message" : "" ; ?> ">Заполните это поле</p>
         </div>
 
         <?php $class_project = isset($errors['project']) ? "form__input--error" : "";
@@ -46,8 +48,9 @@
                     </option>
                 <?php endforeach; ?>
 
-
             </select>
+            <p class="<?= isset($errors['project']) ? "form__message": "";?>" >Заполните это поле</p>
+
         </div>
 
         <div class="form__row">

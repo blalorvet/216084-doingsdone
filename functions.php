@@ -71,3 +71,6 @@ function get_important_task_class_name($task_data_calc)
     }
     return  $result;
 }
+
+
+//function add_new_task_top()

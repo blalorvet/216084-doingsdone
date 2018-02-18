@@ -60,39 +60,6 @@ $popap_add_task = '';
 $errors = [];
 $task_fields = [];
 
-if (isset($_FILES)) {
-    $path = $_FILES;
-    print('Test001<br>');
-    print_r($path);
-
-}
-
-print('Test01<br>');
-
-//print_r($_SERVER);
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $gif = $_POST;
-    print_r($gif);
-    print('Test02<br>');
-    if (isset($_FILES['preview'])) {
-        $path = $_FILES['preview'];
-        print('Test03<br>');
-        print_r($path);
-        $res = move_uploaded_file($_FILES['preview']['tmp_name'], 'uploads/' . $path);
-
-    }
-
-    if (isset($path)) {
-        $gif['path'] = $path;
-        print('Test04<br>');
-    }
-
-
-}
-
-
-
-
 
 // Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
@@ -134,21 +101,19 @@ if (isset($_POST['add_task'])) {
         );
 
 
-//       print_r($tasks);
-//array_unshift ( array &$array , mixed $value1 [, mixed $... ] )
+        if (isset($_FILES['preview']['name'])) {
+
+            $path = $_FILES['preview']['name'];
+            $res = move_uploaded_file($_FILES['preview']['tmp_name'], '' . $path);
+
+
+        }
 
 
     }
 
 
 }
-
-
-
-
-
-
-
 
 
 // Проверяем есть ли в строке запрос add_task и если есть то показываем попап
@@ -184,8 +149,6 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 
 
 }
-
-
 
 
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks

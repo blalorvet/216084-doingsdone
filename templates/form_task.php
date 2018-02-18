@@ -10,7 +10,7 @@
     <h2 class="modal__heading">Добавление задачи</h2>
 
 
-    <form class="form" action="/index.php" method="post">
+    <form class="form" action="/index.php" method="post" enctype="multipart/form-data">
 
 
         <?php $class_name = isset($errors['name']) ? "form__input--error" : "";
@@ -40,6 +40,7 @@
 
             <select class="form__input form__input--select <?= $class_project ?> " name="project" id="project"  >
                 <option value="">Выберите проект</option>
+               <? array_shift($categories);// удалил первый элемент из массива ?>
                 <?PHP foreach ($categories as $index => $category) : ?>
                     <option
                         value="<?= $category; ?>">

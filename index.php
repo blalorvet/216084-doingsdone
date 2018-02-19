@@ -1,7 +1,30 @@
 <?php
 
 // показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
+//$show_complete_tasks = rand(0, 1);
+
+
+
+$expire = strtotime("+30 days");
+$path = "/";
+
+
+if (isset($_GET['show_completed'])) {
+    if (isset($_COOKIE['showcompl'])) {
+        if ($_COOKIE['showcompl'] == 0) {
+            $show_complete_tasks = 1;
+        } else {
+            $show_complete_tasks = 0;
+        }
+        setcookie("showcompl", $show_complete_tasks, $expire, $path);
+        print("<h1>$show_complete_tasks</h1>");
+    }
+}
+
+
+
+
+
 //Массив с категориями
 $categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 //

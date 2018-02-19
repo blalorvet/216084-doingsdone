@@ -29,7 +29,7 @@ function calc_category($massif_fun, $category_fun)
     $sum_fun = 0;
     if ($category_fun === "Все") {
         $sum_fun = count($massif_fun);
-    } else {
+            } else {
         foreach ($massif_fun as $key => $item) {
             if ($item['task_category'] === $category_fun) {
                 $sum_fun++;

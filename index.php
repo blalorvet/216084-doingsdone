@@ -34,11 +34,8 @@ if (isset($_GET['show_completed'])) {
         $show_complete_tasks = $_COOKIE['showcompl'];
 
     }
-//    $show_complete_tasks = 0;
-//    setcookie("showcompl", $show_complete_tasks, $expire, $path);
 }
 
-print("<h1>$show_complete_tasks</h1>");
 
 
 

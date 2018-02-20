@@ -1,7 +1,7 @@
 <?php
 /**
- * @param $template_path - путь до файла
- * @param $template_data - переменная в которую мы будем отправлять страницу
+ * @param $template_path string - путь до файла
+ * @param $template_data string - переменная в которую мы будем отправлять страницу
  * @return string - возвращает содержимое буфера
  */
 function render($template_path, $template_data) // функция render с двумя аргументами - $template_path путь до файла, $template_data - переменная в которую мы будем отправлять страницу
@@ -29,7 +29,7 @@ function calc_category($massif_fun, $category_fun)
     $sum_fun = 0;
     if ($category_fun === "Все") {
         $sum_fun = count($massif_fun);
-    } else {
+            } else {
         foreach ($massif_fun as $key => $item) {
             if ($item['task_category'] === $category_fun) {
                 $sum_fun++;

@@ -20,11 +20,14 @@
     </nav>
 
     <label class="checkbox">
-        <a href="/">
+        <a href="/?show_completed">
             <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
             <!-- Вместо оператора if использовал тернарный оператор ?: -->
+
             <input class="checkbox__input visually-hidden"
-                   type="checkbox" <?= ($show_complete_tasks === 1) ? "checked" : ""; ?> >
+
+                   type="checkbox" <?= ($show_complete_tasks == 1) ? "checked" : ""; ?> >
+
             <span class="checkbox__text">Показывать выполненные</span>
 
 
@@ -37,7 +40,7 @@
 <table class="tasks">
 
     <?php foreach ($tasks as $key => $item) : ?>
-        <?php if ($show_complete_tasks === 0 && $item['task_controls'] === "Нет" || $show_complete_tasks === 1) : ?>
+        <?php if ( $item['task_controls'] === "Нет" || $show_complete_tasks == 1) : ?>
             <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">

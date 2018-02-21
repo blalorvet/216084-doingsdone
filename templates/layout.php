@@ -3,7 +3,7 @@
 /** @var $content string*/
 /** @var $categories string[]*/
 /** @var $tasks []*/
-/** @var  $body_overlay_class string*/
+/** @var $body_overlay_class string*/
 
 
 

@@ -22,7 +22,6 @@
     <label class="checkbox">
         <a href="/?show_completed">
             <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-            <!-- Вместо оператора if использовал тернарный оператор ?: -->
 
             <input class="checkbox__input visually-hidden"
 

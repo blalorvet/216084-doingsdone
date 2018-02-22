@@ -15,7 +15,11 @@
 
             <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=$value;?>" placeholder="Введите e-mail">
 
-            <p class="<?php $classname = isset($auth_errors['email']) ? "form__message" : "";?>">E-mail введён некорректно</p>
+            <p class="<?= $classname = isset($auth_errors['email']) ? "form__message" : "";?>">
+
+                <?=  $auth_errors['email']?>
+
+            </p>
 
         </div>
 
@@ -25,13 +29,14 @@
             <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
             <input class="form__input <?=$classname;?>" type="password" name="password" id="password" value="<?=$value;?>" placeholder="Введите пароль">
+            <p class="<?= $classname = isset($auth_errors['password']) ? "form__message" : "";?>">
+                <?=  $auth_errors['password']?>
+            </p>
         </div>
 
         <div class="form__row form__row--controls">
-            <input class="button" type="submit" name="" value="Войти">
+            <input class="button" type="submit" name="auth_form" value="Войти">
         </div>
-        <?= print_r($auth_errors);?>
-         <?= print_r($users);?>?>
 
     </form>
 </div>

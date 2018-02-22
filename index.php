@@ -41,14 +41,14 @@ if (isset($_GET['show_completed'])) {
         setcookie("showcompl", $show_complete_tasks, $expire, $path);
     }
 } else {
-    if (isset($_COOKIE['showcompl'])) {
+    if (($_COOKIE['showcompl'])) {
         $show_complete_tasks = $_COOKIE['showcompl'];
     }
 
 }
 
 
-if ($_POST['auth_form']) {
+if (isset($_POST['auth_form'])) {
     $form = $_POST;
     $required = ['email', 'password'];
     foreach ($required as $field) {
@@ -81,8 +81,8 @@ if ($_POST['auth_form']) {
 
     if (count($auth_errors)) {
 
-        $layout_way_to_page = 'guest.php';
-        $popap_add_task = render('auth_form.php', ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
+        $layout_way_to_page = 'templates/guest.php';
+        $popap_add_task = render('templates/auth_form.php', ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
     } else {
 
 //        header("Location: /index.php");
@@ -96,7 +96,7 @@ if ($_POST['auth_form']) {
 
         $layout_way_to_page = 'templates/layout.php';
     } else {
-        $layout_way_to_page = 'guest.php';
+        $layout_way_to_page = 'templates/guest.php';
 
     }
 }
@@ -108,7 +108,7 @@ if (isset($_GET['enter'])) {
     if (isset($_SESSION['user'])) {
         $layout_way_to_page = 'templates/layout.php';
     } else {
-        $popap_add_task = render('auth_form.php', [
+        $popap_add_task = render('templates/auth_form.php', [
             'auth_errors' => $auth_errors,
             'categories' => $categories,
             'task_fields' => $task_fields,
@@ -122,7 +122,7 @@ $path = "/";
 if (isset($_GET['logout'])) {
     session_unset();
 //    setcookie($_SESSION['user'],"", time() - 3600);
-    $layout_way_to_page = 'guest.php';
+    $layout_way_to_page = 'templates/guest.php';
 
 }
 
@@ -208,7 +208,7 @@ if (isset($_POST['add_task'])) {
 //Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
 if (isset($_GET['add_task']) || (count($errors))) {
     if (!isset($_SESSION['user'])) {
-        $layout_way_to_page = 'guest.php';
+        $layout_way_to_page = 'templates/guest.php';
 
     } else {
         $popap_add_task = render('templates/form_task.php', [

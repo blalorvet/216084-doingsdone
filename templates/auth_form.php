@@ -1,7 +1,7 @@
 <?PHP
 /** @var $auth_errors string[] */
 /** @var $form string[] */
-/** @var auth_form string */
+
 ?>
 
 <div class="modal">
@@ -17,9 +17,9 @@
 
             <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=$value;?>" placeholder="Введите e-mail">
 
-            <p class="<?= $classname = isset($auth_errors['email']) ? "form__message" : "";?>">
+            <p class="<?= isset($auth_errors['email']) ? "form__message" : "";?>">
 
-                <?=  $auth_errors['email']?>
+                <?= isset($auth_errors['email']) ? $auth_errors['email'] : "";?>
 
             </p>
 
@@ -31,8 +31,9 @@
             <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
             <input class="form__input <?=$classname;?>" type="password" name="password" id="password" value="<?=$value;?>" placeholder="Введите пароль">
-            <p class="<?= $classname = isset($auth_errors['password']) ? "form__message" : "";?>">
-                <?=  $auth_errors['password']?>
+            <p class="<?= isset($auth_errors['password']) ? "form__message" : "";?>">
+                <?= isset($auth_errors['password']) ? $auth_errors['password'] : "";?>
+                
             </p>
         </div>
 

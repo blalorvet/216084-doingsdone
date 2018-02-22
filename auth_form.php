@@ -1,6 +1,7 @@
 <?PHP
 /** @var $auth_errors string[] */
 /** @var $form string[] */
+/** @var auth_form string */
 ?>
 
 <div class="modal">

@@ -3,7 +3,7 @@
 /** @var $tasks []*/
 /** @var $show_popap_add_task []*/
 ?>
-<?= $show_popap_add_task; ?>
+<?//= $show_popap_add_task; ?>
 <h2 class="content__main-heading">Список задач</h2>
 
 <form class="search-form" action="index.html" method="post">

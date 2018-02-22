@@ -14,9 +14,10 @@ $show_complete_tasks = '0';
 $errors = [];
 $task_fields = [];
 $form =[];
-$auth_form= [];
+$auth_form= '';
 $show_popap_add_task= [];
 $auth_errors = [];
+$category_get_id = 0;
 
 
 //$show_complete_tasks = rand(0, 1);// показывать или нет выполненные задачи
@@ -245,12 +246,12 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 }
 
 
-$show_popap_add_task = render($popap_add_task, [
-    'errors' => $errors,
-    'categories' => $categories,
-    'show_complete_tasks' => $show_complete_tasks
-
-]);
+//$show_popap_add_task = render($popap_add_task, [
+//    'errors' => $errors,
+//    'categories' => $categories,
+//    'show_complete_tasks' => $show_complete_tasks
+//
+//]);
 
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
 $page_content = render($way_to_page, [

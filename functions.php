@@ -14,8 +14,30 @@ function render($template_path, $template_data) // функция render с дв
     include_once $template_path; // путь к файлу буферизации
     return ob_get_clean();// возвращем содержимое буфера
 
-
 }
+
+
+
+
+
+
+
+//Функция для поиска e-mail пользователя в масиве
+function searchUserByEmail($email, $users)
+{
+    $result = null;
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+
+        }
+    }
+    return $result;
+}
+
+
+
 
 /**
  * функция подсчитывае общее количество задачь
@@ -29,7 +51,7 @@ function calc_category($massif_fun, $category_fun)
     $sum_fun = 0;
     if ($category_fun === "Все") {
         $sum_fun = count($massif_fun);
-            } else {
+    } else {
         foreach ($massif_fun as $key => $item) {
             if ($item['task_category'] === $category_fun) {
                 $sum_fun++;
@@ -56,20 +78,20 @@ function html_sc($str)
  */
 function get_important_task_class_name($task_data_calc)
 {
-    $result="";
+    $result = "";
     if (!($task_date_calc = strtotime($task_data_calc)) === false) {
         $task_data = (strtotime($task_data_calc));
         $cur_data = (strtotime("now"));
 
         if ((($task_data - $cur_data) / 86400) <= 1) {
 
-            $result ='task--important';
+            $result = 'task--important';
 
 
         }
 
     }
-    return  $result;
+    return $result;
 }
 
 

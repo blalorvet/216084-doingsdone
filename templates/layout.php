@@ -3,7 +3,9 @@
 /** @var $content string*/
 /** @var $categories string[]*/
 /** @var $tasks []*/
-/** @var  $body_overlay_class string*/
+/** @var $body_overlay_class string*/
+/** @var $category_get_id string*/
+
 
 
 
@@ -39,7 +41,7 @@
                     <div class="user-menu__data">
                         <p>Константин</p>
 
-                        <a href="#">Выйти</a>
+                        <a href="/?logout">Выйти</a>
                     </div>
                 </div>
             </div>

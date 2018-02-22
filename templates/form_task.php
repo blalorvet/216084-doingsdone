@@ -13,22 +13,22 @@
     <form class="form" action="/index.php" method="post" enctype="multipart/form-data">
 
 
-        <?php $class_name = isset($errors['name']) ? "form__input--error" : "";
-        $value = isset($add_new_task['name']) ? $add_new_task['name'] : "";
+        <?php $class_name = isset($errors['add_task_name']) ? "form__input--error" : "";
+        $value = isset($add_new_task['add_task_name']) ? $add_new_task['add_task_name'] : "";
 
         ?>
 
         <div class="form__row">
-            <label class="form__label" for="name">Название <sup>*</sup></label>
+            <label class="form__label" for="add_task_name">Название <sup>*</sup></label>
 
             <input
                 class="form__input <?= $class_name ?> "
                 type="text"
-                name="name"
-                id="name"
-                value="<?= isset($task_fields['name']) ? $task_fields['name']: "" ;?>"
+                name="add_task_name"
+                id="add_task_name"
+                value="<?= isset($task_fields['add_task_name']) ? $task_fields['add_task_name']: "" ;?>"
                 placeholder="Введите название">
-            <p class="<?= isset($errors['name'])? "form__message" : "" ; ?> ">Заполните это поле</p>
+            <p class="<?= isset($errors['add_task_name'])? "form__message" : "" ; ?> ">Заполните это поле</p>
         </div>
 
         <?php $class_project = isset($errors['project']) ? "form__input--error" : "";

@@ -33,7 +33,7 @@
             <input class="form__input <?=$classname;?>" type="password" name="password" id="password" value="<?=$value;?>" placeholder="Введите пароль">
             <p class="<?= isset($auth_errors['password']) ? "form__message" : "";?>">
                 <?= isset($auth_errors['password']) ? $auth_errors['password'] : "";?>
-                
+
             </p>
         </div>
 

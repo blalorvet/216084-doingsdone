@@ -28,7 +28,6 @@ $category_get_id = 0;
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
 
-
 $expire = strtotime("+30 days");
 $path = "/";
 if (isset($_GET['show_completed'])) {
@@ -51,6 +50,7 @@ if (isset($_GET['show_completed'])) {
 }
 
 
+//Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['auth_form'])) {
     $form = $_POST;
     $required = ['email', 'password'];
@@ -61,7 +61,6 @@ if (isset($_POST['auth_form'])) {
         }
 
     }
-
 
     if (!count($auth_errors)) {
 
@@ -124,8 +123,7 @@ if (isset($_GET['enter'])) {
 $path = "/";
 if (isset($_GET['logout'])) {
     session_unset();
-//    setcookie($_SESSION['user'],"", time() - 3600);
-    $layout_way_to_page = 'templates/guest.php';
+    $layout_way_to_page = 'templates/logout.php';
 
 }
 

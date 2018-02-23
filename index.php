@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // старт сессии
 require_once('userdata.php');// вызваем файл с массивом e-mail адресов и хэшей пароля пользователей
 require_once('functions.php');// вызваем файл с функциями
 

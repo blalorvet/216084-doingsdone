@@ -38,7 +38,7 @@ ALTER TABLE `categories` ADD CONSTRAINT `categories_fk0` FOREIGN KEY (`user_id`)
 ALTER TABLE `tasks` ADD CONSTRAINT `tasks_fk0` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 
 ALTER TABLE `tasks` ADD CONSTRAINT `tasks_fk1` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`);
-
+/* Создаем индексы  */
 CREATE INDEX user_id_index  ON categories (user_id);
 
 CREATE INDEX name_index  ON tasks (name);

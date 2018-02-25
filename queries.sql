@@ -6,7 +6,7 @@ INSERT INTO users SET email='ignat.v@gmail.com', first_name = 'Игнат', pass
 INSERT INTO users SET email='kitty_93@li.ru', first_name = 'Леночка', password = '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', date_reg = '2018-02-24T11:30:00';
 INSERT INTO users SET email='warrior07@mail.ru', first_name = 'Руслан', password = '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', date_reg = '2018-02-25T11:30:00';
 
-/* Добавляем в таблицу categories список всех категорий,  категории созданы одним пользователем  */
+/* Добавляем в таблицу categories список всех категорий,  категории как буд-то созданы одним пользователем  */
 INSERT INTO categories SET name = 'Входящие', user_id = 1;
 INSERT INTO categories SET name = 'Учеба', user_id = 1;
 INSERT INTO categories SET name = 'Работа', user_id = 1;

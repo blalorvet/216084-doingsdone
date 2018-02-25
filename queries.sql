@@ -1,51 +1,51 @@
 USE doingsdone;
 
-/* Добавляем в таблицу users трех пользователей данные взял из  файла userdata.php  */
+/* Р”РѕР±Р°РІР»СЏРµРј РІ С‚Р°Р±Р»РёС†Сѓ users С‚СЂРµС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РґР°РЅРЅС‹Рµ РІР·СЏР» РёР·  С„Р°Р№Р»Р° userdata.php  */
 
-INSERT INTO users SET email='ignat.v@gmail.com', first_name = 'Игнат', password = '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', date_reg = '2018-02-23T11:30:00';
-INSERT INTO users SET email='kitty_93@li.ru', first_name = 'Леночка', password = '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', date_reg = '2018-02-24T11:30:00';
-INSERT INTO users SET email='warrior07@mail.ru', first_name = 'Руслан', password = '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', date_reg = '2018-02-25T11:30:00';
+INSERT INTO users SET email='ignat.v@gmail.com', first_name = 'РРіРЅР°С‚', password = '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', date_reg = '2018-02-23T11:30:00';
+INSERT INTO users SET email='kitty_93@li.ru', first_name = 'Р›РµРЅРѕС‡РєР°', password = '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', date_reg = '2018-02-24T11:30:00';
+INSERT INTO users SET email='warrior07@mail.ru', first_name = 'Р СѓСЃР»Р°РЅ', password = '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', date_reg = '2018-02-25T11:30:00';
 
-/* Добавляем в таблицу categories список всех категорий,  категории созданы одним пользователем  */
-INSERT INTO categories SET name = 'Входящие', user_id = 1;
-INSERT INTO categories SET name = 'Учеба', user_id = 1;
-INSERT INTO categories SET name = 'Работа', user_id = 1;
-INSERT INTO categories SET name = 'Домашние дела', user_id = 1;
-INSERT INTO categories SET name = 'Авто', user_id = 1;
-
-
-/* Добавляем в таблицу tasks задачи, задачи созданиы одним пользователем  */
-
-INSERT INTO tasks SET name = 'Собеседование в IT компании',date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 3,  deadline = '2018-06-01T11:30:00';
-
-INSERT INTO tasks SET name = 'Выполнить тестовое задание',date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 3,  deadline = '2018-05-25T11:30:00';
-
-INSERT INTO tasks SET name = 'Сделать задание первого раздела' ,date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 2,date_end = '2018-02-25T11:30:00',  deadline = '2018-04-21T11:30:00';
-
-INSERT INTO tasks SET name = 'Встреча с другом' ,date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 1,  deadline = '2018-04-22T11:30:00';
-INSERT INTO tasks SET name = 'Купить корм для кота' ,date_add = '2018-02-10T11:30:00', user_id = 1, category_id = 4,  deadline = '2018-02-26T11:30:00';
-INSERT INTO tasks SET name = 'Заказать пиццу' , date_add = '2018-02-25T11:30:00', user_id = 1, category_id = 4 ;
+/* Р”РѕР±Р°РІР»СЏРµРј РІ С‚Р°Р±Р»РёС†Сѓ categories СЃРїРёСЃРѕРє РІСЃРµС… РєР°С‚РµРіРѕСЂРёР№,  РєР°С‚РµРіРѕСЂРёРё СЃРѕР·РґР°РЅС‹ РѕРґРЅРёРј РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј  */
+INSERT INTO categories SET name = 'Р’С…РѕРґСЏС‰РёРµ', user_id = 1;
+INSERT INTO categories SET name = 'РЈС‡РµР±Р°', user_id = 1;
+INSERT INTO categories SET name = 'Р Р°Р±РѕС‚Р°', user_id = 1;
+INSERT INTO categories SET name = 'Р”РѕРјР°С€РЅРёРµ РґРµР»Р°', user_id = 1;
+INSERT INTO categories SET name = 'РђРІС‚Рѕ', user_id = 1;
 
 
+/* Р”РѕР±Р°РІР»СЏРµРј РІ С‚Р°Р±Р»РёС†Сѓ tasks Р·Р°РґР°С‡Рё, Р·Р°РґР°С‡Рё СЃРѕР·РґР°РЅРёС‹ РѕРґРЅРёРј РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј  */
+
+INSERT INTO tasks SET name = 'РЎРѕР±РµСЃРµРґРѕРІР°РЅРёРµ РІ IT РєРѕРјРїР°РЅРёРё',date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 3,  deadline = '2018-06-01T11:30:00';
+
+INSERT INTO tasks SET name = 'Р’С‹РїРѕР»РЅРёС‚СЊ С‚РµСЃС‚РѕРІРѕРµ Р·Р°РґР°РЅРёРµ',date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 3,  deadline = '2018-05-25T11:30:00';
+
+INSERT INTO tasks SET name = 'РЎРґРµР»Р°С‚СЊ Р·Р°РґР°РЅРёРµ РїРµСЂРІРѕРіРѕ СЂР°Р·РґРµР»Р°' ,date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 2,date_end = '2018-02-25T11:30:00',  deadline = '2018-04-21T11:30:00';
+
+INSERT INTO tasks SET name = 'Р’СЃС‚СЂРµС‡Р° СЃ РґСЂСѓРіРѕРј' ,date_add = '2018-02-23T11:30:00', user_id = 1, category_id = 1,  deadline = '2018-04-22T11:30:00';
+INSERT INTO tasks SET name = 'РљСѓРїРёС‚СЊ РєРѕСЂРј РґР»СЏ РєРѕС‚Р°' ,date_add = '2018-02-10T11:30:00', user_id = 1, category_id = 4,  deadline = '2018-02-26T11:30:00';
+INSERT INTO tasks SET name = 'Р—Р°РєР°Р·Р°С‚СЊ РїРёС†С†Сѓ' , date_add = '2018-02-25T11:30:00', user_id = 1, category_id = 4 ;
 
 
-/*получить список из всех проектов для одного пользователя */
+
+
+/*РїРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РёР· РІСЃРµС… РїСЂРѕРµРєС‚РѕРІ РґР»СЏ РѕРґРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ */
 SELECT * FROM categories WHERE user_id =1;
 
-/*получить список из всех задач для одного проекта - получаю список задач для проекта работа */
+/*РїРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РёР· РІСЃРµС… Р·Р°РґР°С‡ РґР»СЏ РѕРґРЅРѕРіРѕ РїСЂРѕРµРєС‚Р° - РїРѕР»СѓС‡Р°СЋ СЃРїРёСЃРѕРє Р·Р°РґР°С‡ РґР»СЏ РїСЂРѕРµРєС‚Р° СЂР°Р±РѕС‚Р° */
 SELECT * FROM tasks WHERE category_id =3;
 
-/*пометить задачу как выполненную  */
-UPDATE tasks SET date_end = '2018-02-21T13:30:00'  WHERE    name = 'Заказать пиццу' ;
+/*РїРѕРјРµС‚РёС‚СЊ Р·Р°РґР°С‡Сѓ РєР°Рє РІС‹РїРѕР»РЅРµРЅРЅСѓСЋ  */
+UPDATE tasks SET date_end = '2018-02-21T13:30:00'  WHERE    name = 'Р—Р°РєР°Р·Р°С‚СЊ РїРёС†С†Сѓ' ;
 
-/*пометить задачу как выполненную - возможен второй вариант, так как назвние задачи у нас не уникальное, то можно обратиться к id  */
+/*РїРѕРјРµС‚РёС‚СЊ Р·Р°РґР°С‡Сѓ РєР°Рє РІС‹РїРѕР»РЅРµРЅРЅСѓСЋ - РІРѕР·РјРѕР¶РµРЅ РІС‚РѕСЂРѕР№ РІР°СЂРёР°РЅС‚, С‚Р°Рє РєР°Рє РЅР°Р·РІРЅРёРµ Р·Р°РґР°С‡Рё Сѓ РЅР°СЃ РЅРµ СѓРЅРёРєР°Р»СЊРЅРѕРµ, С‚Рѕ РјРѕР¶РЅРѕ РѕР±СЂР°С‚РёС‚СЊСЃСЏ Рє id  */
 UPDATE tasks SET date_end = '2018-02-21T13:30:00'  WHERE    id=13 ;
 
-/*получить все задачи для завтрашнего дня */
+/*РїРѕР»СѓС‡РёС‚СЊ РІСЃРµ Р·Р°РґР°С‡Рё РґР»СЏ Р·Р°РІС‚СЂР°С€РЅРµРіРѕ РґРЅСЏ */
 SELECT * FROM tasks WHERE DATE(deadline) = DATE_ADD(CURDATE(), INTERVAL 1 DAY);
 
-/*обновить название задачи по её идентификатору*/
-UPDATE tasks SET name = "Важная встреча с другом "  WHERE    id=4 ;
+/*РѕР±РЅРѕРІРёС‚СЊ РЅР°Р·РІР°РЅРёРµ Р·Р°РґР°С‡Рё РїРѕ РµС‘ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂСѓ*/
+UPDATE tasks SET name = "Р’Р°Р¶РЅР°СЏ РІСЃС‚СЂРµС‡Р° СЃ РґСЂСѓРіРѕРј "  WHERE    id=4 ;
 
 
 

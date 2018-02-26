@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="<?= $body_overlay_class_guest ?>"><!--class="overlay"-->
+<body class="<?= $body_overlay_class_guest ?> <?=$body_overlay_class_reg?>"><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -44,7 +44,7 @@
                     <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
                 </div>
 
-                <a class="welcome__button button" href="#">Зарегистрироваться</a>
+                <a class="welcome__button button" href="/?registration">Зарегистрироваться</a>
             </section>
         </div>
     </div>

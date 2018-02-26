@@ -20,6 +20,7 @@ $form =[];
 $auth_form= '';
 $show_popap_add_task= [];
 $auth_errors = [];
+$reg_errors = [];
 $category_get_id = 0;
 
 
@@ -126,6 +127,121 @@ if (isset($_GET['logout'])) {
     $layout_way_to_page = 'templates/logout.php';
 
 }
+
+//Проверяем есть ли в строке запрос registration и если есть то показываем форму регистрации
+if (isset($_GET['registration'])) {
+    if (isset($_SESSION['user'])) {
+        $layout_way_to_page = 'templates/layout.php';
+    } else {
+
+        $popap_add_task = render('templates/registration.php', [
+            'reg_errors' => $reg_errors,
+            'categories' => $categories,
+            'task_fields' => $task_fields,
+            'form' => $form
+        ]);
+    }
+
+}
+
+
+
+$sql="";
+$test='OK';
+//Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
+if (isset($_POST['reg_form'])) {
+    $form = $_POST;
+    $required = ['reg_email', 'reg_password', 'reg_name'];
+
+    foreach ($required as $field) {
+        if (empty($form[$field])) {
+            $reg_errors[$field] = 'Это поле надо заполнить';
+
+        }
+
+    }
+
+
+    if (!count($reg_errors)) {
+
+        print_r($form);
+        $db_reg_form = $form['reg_email'];
+        $db_reg_password = $form['reg_password'];
+        $db_reg_name = $form['reg_name'];
+        $db_reg_data ='2018-02-23T11:30:00';
+
+
+
+//ПОДКЛЮЧЕНИЕ К БД и проверка одключения
+        $con = mysqli_connect("localhost", "root", "", "doingsdone");
+        mysqli_set_charset($con, "utf8");
+        if ($con
+            == false) {
+            print("Ошибка подключения: " . mysqli_connect_error());
+        }
+        else {
+            print("Соединение установлено");
+
+        }
+       $sql = "INSERT INTO users SET (email,  password, first_name, date_reg) VALUE ('$db_reg_form', '$db_reg_password', '$db_reg_name', '$db_reg_data')";
+//        $sql = "INSERT INTO users SET (email,  password, first_name, date_reg) VALUE ($form['reg_email'], $form['reg_password'], $form['reg_name'], date_reg = `2018-02-23T11:30:00` )";
+//      $sql = "INSERT INTO users SET email = `$db_reg_form`, password = `$db_reg_password`, first_name = `$db_reg_name`, date_reg = `2018-02-23T11:30:00`";
+      //$sql =   "INSERT INTO users SET email='ignatqwq.v@gmail.com', first_name = 'Игнат', password = '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', date_reg = '2018-02-23T11:30:00'";
+        $result = mysqli_query($con, $sql);
+        if (!$result) {
+            $error = mysqli_error($con);
+            print("Ошибка MySQL: " . $error);
+        }
+
+
+//        if ($user = searchUserByEmail($form['reg_email'], $users)) {
+//
+//            if (password_verify($form['reg_password'], $user['reg_password'])) {
+//                $_SESSION['user'] = $user;
+//
+//            } else {
+//
+//                $reg_errors['reg_password'] = 'Неверный пароль';
+//            }
+//
+//        } else {
+//            $reg_errors['reg_email'] = 'Такой пользователь не найден';
+//
+//        }
+    }
+
+
+    if (count($reg_errors)) {
+
+        $layout_way_to_page = 'templates/guest.php';
+        $popap_add_task = render('templates/registration.php', ['form' => $form, 'reg_errors' => $reg_errors, 'users' => $users]);
+    } else {
+
+//        header("Location: /index.php");
+        $layout_way_to_page = 'templates/layout.php';
+
+//        exit();
+    }
+//    Если форма не была отправлена, то проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
+}
+//
+// else {
+//    if (isset($_SESSION['user'])) {
+//
+//        $layout_way_to_page = 'templates/layout.php';
+//    } else {
+//        $layout_way_to_page = 'templates/guest.php';
+//
+//    }
+//}
+
+
+
+
+
+
+
+
 
 
 
@@ -266,7 +382,8 @@ $page_content = render($way_to_page, [
 $layout_content = render($layout_way_to_page, [
 
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",
-    'body_overlay_class_guest' => isset($_GET['enter']) || (count($auth_errors)) ? "overlay" : "",
+    'body_overlay_class_guest' => isset($_GET['enter']) || (count($reg_errors)) ? "overlay" : "",
+    'body_overlay_class_reg' => isset($_GET['registration']) || (count($auth_errors)) ? "overlay" : "",
     'popap_add_task' => $popap_add_task,
     'content' => $page_content,
     'categories' => $categories,

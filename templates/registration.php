@@ -3,6 +3,7 @@
 /** @var $form string[] */
 ?>
 <div class="modal">
+  <button class="modal__close" type="button" name="button" >Закрыть</button>
 <main class="content__main">
           <h2 class="content__main-heading">Регистрация аккаунта</h2>
 

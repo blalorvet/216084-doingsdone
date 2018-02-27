@@ -18,23 +18,57 @@ function render($template_path, $template_data) // функция render с дв
 
 
 
-
+/**
+ * @param $template_path string - путь до файла
+ * @param $template_data string - переменная в которую мы будем отправлять страницу
+ * @return string - возвращает содержимое буфера
+ */
 
 
 
 //Функция для поиска e-mail пользователя в масиве
-function searchUserByEmail($email, $users)
-{
-    $result = null;
-    foreach ($users as $user) {
-        if ($user['email'] == $email) {
-            $result = $user;
-            break;
+function searchUserByEmail($email, $users){
 
-        }
-    }
-    return $result;
+//
+//    $result = null;
+//    $search_email='';
+//    $sql = "SELECT * FROM  users (email) VALUE ('$email')";
+//    $result = (mysqli_query($users, $sql));
+//
+//    if ($result) {
+//
+//        $search_email = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//
+//
+//
+//    }     else {
+//        $search_email= show_error($content, mysqli_error($link));
+//    }
+
+
+
+
+//    return $search_email;
+
 }
+
+
+
+
+
+
+
+
+
+//    foreach ($users as $user) {
+//        if ($user['email'] == $email) {
+//            $result = $user;
+//            break;
+//
+//        }
+//    }
+
+
 
 
 

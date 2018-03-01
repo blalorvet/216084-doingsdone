@@ -41,7 +41,7 @@
               $value = isset($form['reg_password']) ? $form['reg_name'] : ""; ?>
               <label class="form__label" for="reg_name">Имя <sup>*</sup></label>
 
-              <input class="form__input <?=$classname;?>" type="password" name="reg_name" id="reg_name" value="<?=$value;?>" placeholder="Введите пароль">
+              <input class="form__input <?=$classname;?>" type="text" name="reg_name" id="reg_name" value="<?=$value;?>" placeholder="Введите имя">
               <p class="<?= isset($reg_errors['reg_name']) ? "form__message" : "";?>">
 
                 <?= isset($reg_errors['reg_name']) ? $reg_errors['reg_name'] : "";?>

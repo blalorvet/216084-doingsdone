@@ -27,31 +27,42 @@ function render($template_path, $template_data) // функция render с дв
 
 
 //Функция для поиска e-mail пользователя в масиве
-function searchUserByEmail($email, $users){
-
-//
-//    $result = null;
-//    $search_email='';
-//    $sql = "SELECT * FROM  users (email) VALUE ('$email')";
-//    $result = (mysqli_query($users, $sql));
-//
-//    if ($result) {
-//
-//        $search_email = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//
-//
-//
-//    }     else {
-//        $search_email= show_error($content, mysqli_error($link));
-//    }
+function searchUserByEmail($email, $connect){
 
 
+    $result = null;
+    $search_email='';
+    $sql = "SELECT * FROM users WHERE email ='$email'";
+    $result = (mysqli_query($connect, $sql));
 
+    if ($result) {
+        print('<br>03');
+        $test_email = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        print_r($test_email);
+    }
+    else {
+        print('<br>04');
+       $error = mysqli_error($connect);
+        print($error);
 
-//    return $search_email;
+    }
+
+    return $result;
 
 }
 
+//function search_user_by_email($db_connect, $email) {
+//    $sql_query = "SELECT `email`, `password`, `name` FROM `users` WHERE `email` = ?";
+//    $statement = mysqli_prepare($db_connect, $sql_query);
+//    mysqli_stmt_bind_param($statement, "s", $email);
+//    $execute = mysqli_stmt_execute($statement);
+//    if (!$execute) {
+//        print(mysqli_error($db_connect));
+//        exit;
+//    }
+//    $result = mysqli_stmt_get_result($statement);
+//    return mysqli_fetch_assoc($result);
+//}
 
 
 

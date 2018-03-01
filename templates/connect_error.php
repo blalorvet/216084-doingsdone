@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="<?= $body_overlay_class_guest ?> <?=$body_overlay_class_reg?>"><!--class="overlay"-->
+<body class=" "><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -38,11 +38,18 @@
             <section class="welcome">
                 <h2 class="welcome__heading">«Дела в порядке»</h2>
 
-                <div class="welcome__text">
-                    <p>«Дела в порядке» — это веб приложение для удобного ведения списка дел. Сервис помогает пользователям не забывать о предстоящих важных событиях и задачах.</p>
+                <p class="content__error" > Ошибка подключеник Базе данных. <?= $db_error?>  </p>
+                <?print('<br>');
+                print($db_host);
+                print('<br>');
+                print($db['user']);
 
-                    <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
-                </div>
+                print('<br>');
+                print($db['password']);
+                print('<br>');
+                print($db['database']);
+                ?>
+                <center><a href="/" class="button">Вернуться на главную</a></center>
 
                 <a class="welcome__button button" href="/?registration">Зарегистрироваться</a>
             </section>

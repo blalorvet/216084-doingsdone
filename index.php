@@ -1,7 +1,11 @@
 <?php
 session_start(); // старт сессии
+require_once('database.php');// файл для подключения БД
 require_once('userdata.php');// вызваем файл с массивом e-mail адресов и хэшей пароля пользователей
 require_once('functions.php');// вызваем файл с функциями
+require_once('mysql_helper.php');// файл для подключения БД
+
+
 
 //Массив с проекамаи(категориями)
 $categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
@@ -16,14 +20,18 @@ $path = [];
 $show_complete_tasks = '0';
 $errors = [];
 $task_fields = [];
-$form =[];
-$auth_form= '';
-$show_popap_add_task= [];
+$form = [];
+$auth_form = '';
+$show_popap_add_task = [];
 $auth_errors = [];
+$reg_errors = [];
 $category_get_id = 0;
 
 
-//$show_complete_tasks = rand(0, 1);// показывать или нет выполненные задачи
+//Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
+if (isset($_POST['reg_form'])) {
+    include_once 'registration_controller.php';
+}
 
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
@@ -52,55 +60,7 @@ if (isset($_GET['show_completed'])) {
 
 //Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['auth_form'])) {
-    $form = $_POST;
-    $required = ['email', 'password'];
-    foreach ($required as $field) {
-        if (empty($form[$field])) {
-            $auth_errors[$field] = 'Это поле надо заполнить';
-
-        }
-
-    }
-
-    if (!count($auth_errors)) {
-
-        if ($user = searchUserByEmail($form['email'], $users)) {
-
-            if (password_verify($form['password'], $user['password'])) {
-                $_SESSION['user'] = $user;
-
-            } else {
-
-                $auth_errors['password'] = 'Неверный пароль';
-            }
-
-        } else {
-            $auth_errors['email'] = 'Такой пользователь не найден';
-
-        }
-    }
-
-
-    if (count($auth_errors)) {
-
-        $layout_way_to_page = 'templates/guest.php';
-        $popap_add_task = render('templates/auth_form.php', ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
-    } else {
-
-//        header("Location: /index.php");
-        $layout_way_to_page = 'templates/layout.php';
-
-//        exit();
-    }
-//    Если форма не была отправлена, то проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
-} else {
-    if (isset($_SESSION['user'])) {
-
-        $layout_way_to_page = 'templates/layout.php';
-    } else {
-        $layout_way_to_page = 'templates/guest.php';
-
-    }
+  include_once 'auth_controller.php';
 }
 
 
@@ -127,6 +87,26 @@ if (isset($_GET['logout'])) {
 
 }
 
+
+//Проверяем есть ли в строке запрос registration и если есть то показываем форму регистрации
+if (isset($_GET['registration'])) {
+    if (isset($_SESSION['user'])) {
+        $layout_way_to_page = 'templates/layout.php';
+    } else {
+
+        $popap_add_task = render('templates/registration.php', [
+            'reg_errors' => $reg_errors,
+            'categories' => $categories,
+            'task_fields' => $task_fields,
+            'form' => $form
+        ]);
+    }
+
+}
+
+
+$sql = "";
+$test = 'OK';
 
 
 
@@ -266,13 +246,15 @@ $page_content = render($way_to_page, [
 $layout_content = render($layout_way_to_page, [
 
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",
-    'body_overlay_class_guest' => isset($_GET['enter']) || (count($auth_errors)) ? "overlay" : "",
+    'body_overlay_class_guest' => isset($_GET['enter']) || (count($reg_errors)) ? "overlay" : "",
+    'body_overlay_class_reg' => isset($_GET['registration']) || (count($auth_errors)) ? "overlay" : "",
     'popap_add_task' => $popap_add_task,
     'content' => $page_content,
     'categories' => $categories,
     'title' => 'Дела в порядке',
     'tasks' => $tasks,
-    'category_get_id' => $category_get_id
+    'category_get_id' => $category_get_id,
+    'test_email' => $test_email
 
 ]);
 // выводим весь собраныый контент на страницу из шаблонов

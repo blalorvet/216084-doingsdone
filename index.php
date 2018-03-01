@@ -1,10 +1,10 @@
 <?php
 session_start(); // старт сессии
+require_once('database.php');// файл для подключения БД
 require_once('userdata.php');// вызваем файл с массивом e-mail адресов и хэшей пароля пользователей
 require_once('functions.php');// вызваем файл с функциями
-require_once('database.php');// файл для подключения БД
 require_once('mysql_helper.php');// файл для подключения БД
-print_r($db_error);
+
 
 
 //Массив с проекамаи(категориями)
@@ -28,7 +28,10 @@ $reg_errors = [];
 $category_get_id = 0;
 
 
-//$show_complete_tasks = rand(0, 1);// показывать или нет выполненные задачи
+//Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
+if (isset($_POST['reg_form'])) {
+    include_once 'registration_controller.php';
+}
 
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
@@ -57,86 +60,7 @@ if (isset($_GET['show_completed'])) {
 
 //Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['auth_form'])) {
-    $form = $_POST;
-    $required = ['email', 'password'];
-    foreach ($required as $field) {
-        if (empty($form[$field])) {
-            $auth_errors[$field] = 'Это поле надо заполнить';
-
-        }
-
-    }
-
-
-//Если в $auth_errors ошибок нет, то подключаемся к базе
-    if (!count($auth_errors)) {
-
-        $email_check = $form  ['email'];
-
-
-        if ($user = searchUserByEmail($form['email'], $db_connect)) {
-
-
-
-//                if (password_verify($form['password'], $user['password'])) {
-//                    $_SESSION['user'] = $user;
-//
-//                } else {
-//
-//                    $auth_errors['password'] = 'Неверный пароль';
-//                }
-//
-//            } else {
-//                $auth_errors['email'] = 'Такой пользователь не найден';
-
-        }
-
-
-//            if ($user = searchUserByEmail($form['email'], $link)) {
-//
-//                Print($result);
-//
-//                if (password_verify($form['password'], $user['password'])) {
-//                    $_SESSION['user'] = $user;
-//
-//                } else {
-//
-//                    $auth_errors['password'] = 'Неверный пароль';
-//                }
-////
-//            } else {
-//                $auth_errors['email'] = 'Такой пользователь не найден';
-
-//            }
-
-
-//        }
-
-
-    }
-
-
-    if (count($auth_errors)) {
-
-        $layout_way_to_page = 'templates/guest.php';
-        $popap_add_task = render('templates/auth_form.php',
-            ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
-    } else {
-
-//        header("Location: /index.php");
-        $layout_way_to_page = 'templates/layout.php';
-
-//        exit();
-    }
-//    Если форма не была отправлена, то проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
-} else {
-    if (isset($_SESSION['user'])) {
-
-        $layout_way_to_page = 'templates/layout.php';
-    } else {
-        $layout_way_to_page = 'templates/guest.php';
-
-    }
+  include_once 'auth_controller.php';
 }
 
 
@@ -183,86 +107,7 @@ if (isset($_GET['registration'])) {
 
 $sql = "";
 $test = 'OK';
-//Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
-if (isset($_POST['reg_form'])) {
-    $form = $_POST;
-    $required = ['reg_email', 'reg_password', 'reg_name'];
 
-    foreach ($required as $field) {
-        if (empty($form[$field])) {
-            $reg_errors[$field] = 'Это поле надо заполнить';
-
-        }
-
-    }
-//    Проверка валидности e-mail адреса
-    if (!(filter_var($form['reg_email'], FILTER_VALIDATE_EMAIL))) {
-        $reg_errors['reg_email'] = "Введен некорректный e-mail адрес";
-    }
-//Если ошибок нет, то передаем данные полей в переменные
-    if (!count($reg_errors)) {
-        print(count($reg_errors));
-        print('<br>');
-
-        $db_reg_email = $form['reg_email'];
-        $form['reg_password'] = password_hash($form['reg_password'], PASSWORD_DEFAULT); // Хэшированние пароля
-        $db_reg_name = $form['reg_name'];
-        $db_reg_data = '2018-02-23T11:30:00';
-        $form['reg_data'] = $db_reg_data;
-        print_r($form);
-        print('<br>');print($form['reg_email']);
-        print('<br>');print($form['reg_password']);
-        print('<br>');print($form['reg_name']);
-        print('<br>');print($form['reg_data']);
-
-
-        $sql = "INSERT INTO users (email,  password, first_name, date_reg) VALUE (NOW(),?,?,?,?)";
-        $stmt = db_get_prepare_stmt($db_error, $sql, [$form['reg_email'], $form['reg_password'], $form['reg_name'], $form['reg_data']]);
-        $res = mysqli_stmt_execute($stmt);
-
-
-        if ($res) {
-
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($db_connect);
-        }
-
-
-//ПОДКЛЮЧЕНИЕ К БД и проверка подключения
-//        $sql = "INSERT INTO users (email,  password, first_name, date_reg)
-//VALUE ('$db_reg_email', '$db_reg_password', '$db_reg_name', '$db_reg_data')";
-//        if (mysqli_query($link, $sql)) {
-//
-//            echo "New record created successfully";
-//        } else {
-//            echo "Error: " . $sql . "<br>" . mysqli_error($link);
-//        }
-
-
-    }
-
-
-    if (count($reg_errors)) {
-
-        $layout_way_to_page = 'templates/guest.php';
-        $popap_add_task = render('templates/registration.php',
-            ['form' => $form, 'reg_errors' => $reg_errors, 'users' => $users]);
-    } else {
-
-//        header("Location: /index.php");
-        $auth_errors = "error";
-        $layout_way_to_page = 'templates/guest.php';
-        $popap_add_task = render('templates/auth_form.php', [
-            'auth_errors' => $auth_errors,
-            'categories' => $categories,
-            'task_fields' => $task_fields,
-            'form' => $form
-        ]);
-
-//        exit();
-    }
-}
 
 
 //Массив с задачами

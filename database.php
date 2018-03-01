@@ -1,37 +1,14 @@
 <?php
-include_once('templates/config.php');
-include_once('functions.php');
-$db_error = "";
-//$db[] = array(
-//    "host" => "localhost",
-//    "user" => "root",
-//    "password" => "",
-//    "database" => "doingsdone",
-//);
+if (!file_exists('config.php')) { // осуществляем проверку для $template_path существует ли такой файл, если нет возвращаем пустую строчку ""
+    echo "Ошибка подключения к базе данных";
+    exit;
+}
 
+include_once('config.php');
 
-
-
-
-$db_connect= mysqli_connect($db_host, $db_user, $db_password, $db_database);
-//$link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
-mysqli_set_charset($db_connect, "utf8");
-
+$db_connect = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 if (!$db_connect) {
-    $db_error = ("Ошибка подключения: " . mysqli_connect_error());
-    $page_content = render('templates/connect_error.php', [
-
-        'db_error' => $db_error,
-
-
-
-    ]);
-    print($page_content);
+    echo "Ошибка подключения к базе данных";
+    exit;
 }
-else {
-    $db_error =("Соединение установлено");
-
-}
-
-
-
+mysqli_set_charset($db_connect, "utf8");

@@ -28,7 +28,7 @@ function render(
  */
 
 
-//Функция для поиска e-mail пользователя в масиве
+//Функция для поиска e-mail пользователя в БД
 
 function searchUserByEmail($email, $db_connect){
 
@@ -36,45 +36,33 @@ function searchUserByEmail($email, $db_connect){
     print('<br>');
 
 
-    $sql = "SELECT * FROM users WHERE email = ?";
+  $sql = "SELECT * FROM users WHERE email = ?";
+    $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$email]);
-    var_dump($stmt);
-    $result = mysqli_query($db_connect, $stmt);
-    $users = mysqli_fetch_array($result);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+//    $users = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    $users = mysqli_fetch_assoc($res);
+
+
+
+
+//
 //    $sql = "SELECT * FROM users WHERE email = '$email'";
-//    $result = mysqli_query($db_connect, $sql);
-//    $users = mysqli_fetch_array($result);
+//    $result_1 = mysqli_query($db_connect, $sql);
+//    $users_1 = mysqli_fetch_assoc($result_1);
 
 
 
 
 //   var_dump($result);
-    print('<br>');
+    print('<br> $users_1 = ');
+    var_dump($users_1);
+    print('<br> $users = ');
     var_dump($users);
-
+    return $users;
 }
 
-//
-//function searchUserByEmail($link, $email) {
-//    $sql = "SELECT * FROM users WHERE email = '".$email."'";
-//    $result = mysqli_query($link, $sql);
-//    $user = mysqli_fetch_assoc($result);
-//    return $user;
-//    var_dump($user);
-//}
-
-
-//function searchUserByEmail($email,$link) {
-//    $user = null;
-//    $sql = "SELECT * FROM users WHERE email = '$email'";
-//    $result = mysqli_query($link, $sql);
-//    if ($result) {
-//        $user = mysqli_fetch_assoc($result);
-//    }
-//    return $user;
-//    var_dump($result);
-// var_dump($resu);
-//}
 
 
 

@@ -6,10 +6,10 @@ require_once('functions.php');// вызваем файл с функциями
 require_once('mysql_helper.php');// файл для подключения БД
 
 
-
-//Массив с проекамаи(категориями)
-$categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+//Массив с проектамаи(категориями)
+//$categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 //Значения переменных по умолчанию
+
 $layout_way_to_page = '';
 $popap_add_task = '';
 $filtered_task = [];
@@ -23,14 +23,33 @@ $task_fields = [];
 $form = [];
 $auth_form = '';
 $show_popap_add_task = [];
+$categories= [];
+$user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
+
+//проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
+if (isset($_SESSION['user'])) {
+    $user_sesion = ($_SESSION['user']);
+    print('<br>');
+    var_dump($user_sesion['id']);
+    $categories = searchUserCategories($user_sesion['id'], $db_connect );
+    print('<br>');
+    var_dump($categories);
+
+    $layout_way_to_page = 'templates/layout.php';
+
+} else {
+    $layout_way_to_page = 'templates/guest.php';
+
+}
 
 
 //Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['reg_form'])) {
     include_once 'registration_controller.php';
+
 }
 
 
@@ -53,6 +72,7 @@ if (isset($_GET['show_completed'])) {
 } else {
     if (($_COOKIE['showcompl'])) {
         $show_complete_tasks = $_COOKIE['showcompl'];
+
     }
 
 }
@@ -60,7 +80,7 @@ if (isset($_GET['show_completed'])) {
 
 //Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['auth_form'])) {
-  include_once 'auth_controller.php';
+    include_once 'auth_controller.php';
 }
 
 
@@ -107,7 +127,6 @@ if (isset($_GET['registration'])) {
 
 $sql = "";
 $test = 'OK';
-
 
 
 //Массив с задачами
@@ -253,8 +272,7 @@ $layout_content = render($layout_way_to_page, [
     'categories' => $categories,
     'title' => 'Дела в порядке',
     'tasks' => $tasks,
-    'category_get_id' => $category_get_id,
-    'test_email' => $test_email
+    'category_get_id' => $category_get_id
 
 ]);
 // выводим весь собраныый контент на страницу из шаблонов

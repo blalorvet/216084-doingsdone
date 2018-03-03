@@ -1,10 +1,14 @@
 <?php
+include_once('mysql_helper.php');
 /**
  * @param $template_path string - путь до файла
  * @param $template_data string - переменная в которую мы будем отправлять страницу
  * @return string - возвращает содержимое буфера
  */
-function render($template_path, $template_data) // функция render с двумя аргументами - $template_path путь до файла, $template_data - переменная в которую мы будем отправлять страницу
+function render(
+    $template_path,
+    $template_data
+) // функция render с двумя аргументами - $template_path путь до файла, $template_data - переменная в которую мы будем отправлять страницу
 {
     if (!file_exists($template_path)) { // осуществляем проверку для $template_path существует ли такой файл, если нет возвращаем пустую строчку ""
         return "";
@@ -17,7 +21,6 @@ function render($template_path, $template_data) // функция render с дв
 }
 
 
-
 /**
  * @param $template_path string - путь до файла
  * @param $template_data string - переменная в которую мы будем отправлять страницу
@@ -26,61 +29,55 @@ function render($template_path, $template_data) // функция render с дв
 
 
 
-//Функция для поиска e-mail пользователя в масиве
-function searchUserByEmail($email, $connect){
 
 
-    $result = null;
-    $search_email='';
-    $sql = "SELECT * FROM users WHERE email ='$email'";
-    $result = (mysqli_query($connect, $sql));
 
-    if ($result) {
-        print('<br>03');
-        $test_email = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        print_r($test_email);
-    }
-    else {
-        print('<br>04');
-       $error = mysqli_error($connect);
-        print($error);
 
-    }
 
-    return $result;
 
+
+
+
+//Функция для поиска e-mail пользователя в БД
+function searchUserByEmail($email, $db_connect){
+
+  $sql = "SELECT * FROM users WHERE email = ?";
+    $res = mysqli_prepare($db_connect, $sql);
+    $stmt = db_get_prepare_stmt($db_connect, $sql, [$email]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+//    $users = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    $users = mysqli_fetch_assoc($res);
+//
+//    $sql = "SELECT * FROM users WHERE email = '$email'";
+//    $result_1 = mysqli_query($db_connect, $sql);
+//    $users_1 = mysqli_fetch_assoc($result_1);
+
+//   var_dump($result);
+    print('<br> $users_1 = ');
+
+    print('<br> $users = ');
+    var_dump($users);
+    return $users;
 }
 
-//function search_user_by_email($db_connect, $email) {
-//    $sql_query = "SELECT `email`, `password`, `name` FROM `users` WHERE `email` = ?";
-//    $statement = mysqli_prepare($db_connect, $sql_query);
-//    mysqli_stmt_bind_param($statement, "s", $email);
-//    $execute = mysqli_stmt_execute($statement);
-//    if (!$execute) {
-//        print(mysqli_error($db_connect));
-//        exit;
-//    }
-//    $result = mysqli_stmt_get_result($statement);
-//    return mysqli_fetch_assoc($result);
-//}
+function searchUserCategories($id_user, $db_connect){
 
-
-
-
-
-
-
-
-//    foreach ($users as $user) {
-//        if ($user['email'] == $email) {
-//            $result = $user;
-//            break;
-//
-//        }
-//    }
-
-
-
+    $sql = "SELECT * FROM categories WHERE user_id = ?";
+    $res = mysqli_prepare($db_connect, $sql);
+    $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $name_categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
+//    $name_categories = mysqli_fetch_assoc($res);
+    foreach ($name_categories as $item) {
+        $categories[] = $item['name'];
+    }
+    var_dump($categories);
+    print('<br> $categories = ');
+    print_r($categories);
+    return $categories;
+}
 
 
 
@@ -91,7 +88,6 @@ function searchUserByEmail($email, $connect){
  * @return int - возвращает обшее количество задачь
  */
 function calc_category($massif_fun, $category_fun)
-
 {
     $sum_fun = 0;
     if ($category_fun === "Все") {
@@ -139,5 +135,3 @@ function get_important_task_class_name($task_data_calc)
     return $result;
 }
 
-
-//function add_new_task_top()

@@ -1,4 +1,7 @@
 <?php
+
+$auth_errors = [];
+
 $form = $_POST;
 $required = ['email', 'password'];
 foreach ($required as $field) {
@@ -15,44 +18,22 @@ if (!count($auth_errors)) {
 
     $email_check = $form  ['email'];
 
+            if ($user = searchUserByEmail($form['email'], $db_connect)) {
 
-    if ($user = searchUserByEmail($form['email'], $db_connect)) {
+                if (password_verify($form['password'], $user['password'])) {
+                    $_SESSION['user'] = $user;
 
+                } else {
 
-//                if (password_verify($form['password'], $user['password'])) {
-//                    $_SESSION['user'] = $user;
-//
-//                } else {
-//
-//                    $auth_errors['password'] = 'Неверный пароль';
-//                }
-//
-//            } else {
-//                $auth_errors['email'] = 'Такой пользователь не найден';
+                    $auth_errors['password'] = 'Неверный пароль';
+                }
 
-    }
+            } else {
+                $auth_errors['email'] = 'Такой пользователь не найден';
+                $layout_way_to_page = 'templates/guest.php';
+                print('<br>');
 
-
-//            if ($user = searchUserByEmail($form['email'], $link)) {
-//
-//                Print($result);
-//
-//                if (password_verify($form['password'], $user['password'])) {
-//                    $_SESSION['user'] = $user;
-//
-//                } else {
-//
-//                    $auth_errors['password'] = 'Неверный пароль';
-//                }
-////
-//            } else {
-//                $auth_errors['email'] = 'Такой пользователь не найден';
-
-//            }
-
-
-//        }
-
+            }
 
 }
 

@@ -54,10 +54,10 @@ function searchUserByEmail($email, $db_connect){
 //    $users_1 = mysqli_fetch_assoc($result_1);
 
 //   var_dump($result);
-    print('<br> $users_1 = ');
-
-    print('<br> $users = ');
-    var_dump($users);
+//    print('<br> $users_1 = ');
+//
+//    print('<br> $users = ');
+//    var_dump($users);
     return $users;
 }
 
@@ -73,9 +73,9 @@ function searchUserCategories($id_user, $db_connect){
     foreach ($name_categories as $item) {
         $categories[] = $item['name'];
     }
-    var_dump($categories);
-    print('<br> $categories = ');
-    print_r($categories);
+//    var_dump($categories);
+//    print('<br> $categories = ');
+//    print_r($categories);
     return $categories;
 }
 

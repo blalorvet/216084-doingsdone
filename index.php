@@ -31,6 +31,9 @@ $category_get_id = 0;
 
 //проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
 if (isset($_SESSION['user'])) {
+    $user_sesion = ($_SESSION['user']);
+
+    $categories = searchUserCategories($user_sesion['id'], $db_connect );
 
 
     $layout_way_to_page = 'templates/layout.php';

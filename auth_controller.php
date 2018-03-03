@@ -23,6 +23,9 @@ if (!count($auth_errors)) {
                 if (password_verify($form['password'], $user['password'])) {
                     $_SESSION['user'] = $user;
 
+                    $categories = searchUserCategories($user['id'], $db_connect );
+                   
+
                 } else {
 
                     $auth_errors['password'] = 'Неверный пароль';

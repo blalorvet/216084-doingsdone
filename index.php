@@ -31,12 +31,7 @@ $category_get_id = 0;
 
 //проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
 if (isset($_SESSION['user'])) {
-    $user_sesion = ($_SESSION['user']);
-    print('<br>');
-    var_dump($user_sesion['id']);
-    $categories = searchUserCategories($user_sesion['id'], $db_connect );
-    print('<br>');
-    var_dump($categories);
+
 
     $layout_way_to_page = 'templates/layout.php';
 
@@ -102,8 +97,8 @@ if (isset($_GET['enter'])) {
 
 $path = "/";
 if (isset($_GET['logout'])) {
-    session_unset();
-    $layout_way_to_page = 'templates/logout.php';
+
+    include_once 'templates/logout.php';
 
 }
 

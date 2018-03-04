@@ -5,6 +5,7 @@
 /** @var $tasks []*/
 /** @var $body_overlay_class string*/
 /** @var $category_get_id string*/
+/** @var $body_overlay_class_add_category string*/
 
 
 
@@ -19,8 +20,8 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<? print($test_email)?>
-<body class="<?= $body_overlay_class ?>" ><!--class="overlay"-->
+
+<body class="<?= $body_overlay_class ?> <?= $body_overlay_class_add_category ?>" ><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -39,7 +40,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p>Константин</p>
+                        <p><?= $user_first_name?></p>
 
                         <a href="/?logout">Выйти</a>
                     </div>
@@ -55,20 +56,21 @@
                     <ul class="main-navigation__list">
 
                         <!-- Список проектов из простого массива -->
-                        <?PHP foreach ($categories as $index => $category) : ?>
+                        <?PHP foreach ($categories as  $category) : ?>
                             <?//= gettype($category_get_id) ?>
-                            <li class="main-navigation__list-item <?= ($index === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
+                            <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
 <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
-                                <a class="main-navigation__list-item-link" href="?category=<?= $index; ?>" > <?= html_sc($category); ?>  </a>
+                                <a class="main-navigation__list-item-link" href="?category=<?= $category['id']; ?>" > <?= html_sc($category['name']); ?>  </a>
                                 <span
-                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span>
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category['id']);  ?></span>
+
                             </li>
 
                         <?php endforeach; ?>
                     </ul>
                 </nav>
 
-                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/?add_category">Добавить проект</a>
             </section>
 
 

@@ -6,10 +6,8 @@ require_once('functions.php');// вызваем файл с функциями
 require_once('mysql_helper.php');// файл для подключения БД
 
 
-
-//Массив с проекамаи(категориями)
-$categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 //Значения переменных по умолчанию
+
 $layout_way_to_page = '';
 $popap_add_task = '';
 $filtered_task = [];
@@ -19,18 +17,58 @@ $add_task = null;
 $path = [];
 $show_complete_tasks = '0';
 $errors = [];
+$cat_errors = [];
+$tasks = [];
 $task_fields = [];
 $form = [];
 $auth_form = '';
+$user_first_name ='';
 $show_popap_add_task = [];
+$categories [] = array("id" => 0,
+    "name" => "Все"  );
+
+
+$user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
+$category_user_id =[];
+$category_user_name =[];
+
+
+
+//Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
+if (isset($_POST['auth_form'])) {
+    include_once 'auth_controller.php';
+}
+
+
+
+//проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
+if (isset($_SESSION['user'])) {
+    $user_sesion = ($_SESSION['user']);
+
+    $user_first_name = $user_sesion['first_name'];
+    var_export($user_first_name);
+    $categories = array_merge ($categories, searchUserCategories($user_sesion['id'], $db_connect ));
+    $tasks = searchUserTasks ($user_sesion['id'], $db_connect );
+    foreach($categories as $category){
+        $category_user_id [] = $category['id'];
+        $category_user_name[] = $category['name'];
+    }
+
+    $layout_way_to_page = 'templates/layout.php';
+
+} else {
+    $layout_way_to_page = 'templates/guest.php';
+
+}
 
 
 //Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['reg_form'])) {
     include_once 'registration_controller.php';
+
 }
 
 
@@ -53,19 +91,15 @@ if (isset($_GET['show_completed'])) {
 } else {
     if (($_COOKIE['showcompl'])) {
         $show_complete_tasks = $_COOKIE['showcompl'];
+
     }
 
 }
 
 
-//Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
-if (isset($_POST['auth_form'])) {
-  include_once 'auth_controller.php';
-}
 
 
 // Аутентификации - Проверяем есть ли в строке запрос enter и если есть то показываем попап
-//if (isset($_GET['enter']) || (count($errors))) {
 if (isset($_GET['enter'])) {
     if (isset($_SESSION['user'])) {
         $layout_way_to_page = 'templates/layout.php';
@@ -82,8 +116,8 @@ if (isset($_GET['enter'])) {
 
 $path = "/";
 if (isset($_GET['logout'])) {
-    session_unset();
-    $layout_way_to_page = 'templates/logout.php';
+
+    include_once 'templates/logout.php';
 
 }
 
@@ -109,81 +143,73 @@ $sql = "";
 $test = 'OK';
 
 
-
 //Массив с задачами
-$tasks = [];
-$tasks[] = array(
-    "task_name" => "Собеседование в IT компании",
-    "task_date" => "01.06.2018",
-    "task_category" => "Работа",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Выполнить тестовое задание",
-    "task_date" => "25.05.2018",
-    "task_category" => "Работа",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Сделать задание первого раздела",
-    "task_date" => "21.04.2018",
-    "task_category" => "Учеба",
-    "task_controls" => "Да"
-);
-$tasks[] = array(
-    "task_name" => "Встреча с другом",
-    "task_date" => "22.04.2018",
-    "task_category" => "Входящие",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Купить корм для кота",
-    "task_date" => "11.02.2018",
-    "task_category" => "Домашние дела",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Заказать пиццу",
-    "task_date" => "Нет",
-    "task_category" => "Домашние дела",
-    "task_controls" => "Нет"
-);
+//$tasks = [];
+//$tasks[] = array(
+//    "task_name" => "Собеседование в IT компании",
+//    "task_date" => "01.06.2018",
+//    "task_category" => "Работа",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Выполнить тестовое задание",
+//    "task_date" => "25.05.2018",
+//    "task_category" => "Работа",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Сделать задание первого раздела",
+//    "task_date" => "21.04.2018",
+//    "task_category" => "Учеба",
+//    "task_controls" => "Да"
+//);
+//$tasks[] = array(
+//    "task_name" => "Встреча с другом",
+//    "task_date" => "22.04.2018",
+//    "task_category" => "Входящие",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Купить корм для кота",
+//    "task_date" => "11.02.2018",
+//    "task_category" => "Домашние дела",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Заказать пиццу",
+//    "task_date" => "Нет",
+//    "task_category" => "Домашние дела",
+//    "task_controls" => "Нет"
+//);
+
+
+//Добавление новой КАТЕГОРИИ  - Из запроса POST забираем обязательные для заполнения поля
+if (isset($_POST['add_category'])) {
+    include_once 'add_category_controller.php';
+}
+
+
+
+//Добавление новой КАТЕГОРИИИ  - Проверяем есть ли в строке запрос  и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
+if (isset($_GET['add_category']) || (count($errors))) {
+    if (!isset($_SESSION['user'])) {
+        $layout_way_to_page = 'templates/guest.php';
+
+    } else {
+        $popap_add_task = render('templates/add_category.php', [
+            '$cat_errors' => $cat_errors
+        ]);
+    }
+
+}
 
 
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
-
-    $required = ['add_task_name', 'project'];
-//В цикле проверяем заполнены поля или нет, если не заполнены то передаем значение не заполненного поля в масси Errors
-    foreach ($required as $key) {
-
-        if (empty($_POST[$key])) {
-
-            $errors[$key] = 'Это поле надо заполнить';
-
-        } else {
-
-            $task_fields[$key] = $_POST[$key];
-
-        }
-    }
-    if (empty($errors)) {
-
-        array_unshift($tasks, array(// добавляем новую задачу в начало массива задачь
-                "task_name" => $_POST['add_task_name'],
-                "task_date" => $_POST['date'],
-                "task_category" => $_POST['project']
-            )
-        );
-
-        if (isset($_FILES['preview']['add_task_name'])) { // Загрузка файла в корневую дирректорию
-
-            $path = $_FILES['preview']['add_task_name'];
-            $res = move_uploaded_file($_FILES['preview']['tmp_name'], '' . $path);
-
-        }
-    }
+    include_once 'add_task_controller.php';
 }
+
+
 
 //Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
 if (isset($_GET['add_task']) || (count($errors))) {
@@ -200,22 +226,34 @@ if (isset($_GET['add_task']) || (count($errors))) {
 
 }
 
+
+
+
+
+
+
+
 //Вывод задач в соответствии с выбранным проектом(категорией)
 if (!isset($_GET['category'])) {  // вернет истину если нет параметра или параметр равен null, ноль, пустая строка или строка из нуля Тут если запрос пустой то выводим все задачи
     $filtered_task = $tasks;
 } else {
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
 
+
+
     if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
         $filtered_task = $tasks;
     }
+
     foreach ($tasks as $key => $task) {
-        if (in_array($categories[$category_get_id], $categories) != 1) {
+
+        if (in_array($category_get_id, $category_user_id) != true) {
+
             $way_to_page = 'templates/error.php';
             break;
         }
 
-        if ($task['task_category'] === $categories[$category_get_id]) {
+            if ($task['task_category'] === $category_get_id) {
             $filtered_task[] = $task;
 
 
@@ -248,13 +286,14 @@ $layout_content = render($layout_way_to_page, [
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",
     'body_overlay_class_guest' => isset($_GET['enter']) || (count($reg_errors)) ? "overlay" : "",
     'body_overlay_class_reg' => isset($_GET['registration']) || (count($auth_errors)) ? "overlay" : "",
+    'body_overlay_class_add_category' => isset($_GET['add_category']) || (count($cat_errors)) ? "overlay" : "",
     'popap_add_task' => $popap_add_task,
     'content' => $page_content,
     'categories' => $categories,
     'title' => 'Дела в порядке',
     'tasks' => $tasks,
     'category_get_id' => $category_get_id,
-    'test_email' => $test_email
+    'user_first_name' => $user_first_name
 
 ]);
 // выводим весь собраныый контент на страницу из шаблонов

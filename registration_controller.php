@@ -1,4 +1,8 @@
 <?php
+//Форма регистрации - проверка полей на заполнение, валидность и отправка данных в БД
+/** @var $reg_errors string[] */
+
+
 $form = $_POST;
 $required = ['reg_email', 'reg_password', 'reg_name'];
 

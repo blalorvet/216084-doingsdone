@@ -1,4 +1,5 @@
 <?PHP
+/** Страница для вывода ошибок */
 /** @var  $body_overlay_class_guest string*/
 /** @var  $auth_form string[]*/
 /** @var  $auth_errors string[]*/

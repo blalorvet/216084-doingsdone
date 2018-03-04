@@ -22,26 +22,15 @@ function render(
 
 
 /**
- * @param $template_path string - путь до файла
- * @param $template_data string - переменная в которую мы будем отправлять страницу
- * @return string - возвращает содержимое буфера
+ * Функция для поиска e-mail пользователя в БД
+ * @param $email - пользователя для которого
+ * @param $db_connect - соединение с БД
+ * @return string[]- возвращает email, если он существует в БД
  */
-
-
-
-
-
-
-
-
-
-
-
-
-//Функция для поиска e-mail пользователя в БД
-function searchUserByEmail($email, $db_connect){
-    $users =[];
-  $sql = "SELECT * FROM users WHERE email = ?";
+function searchUserByEmail($email, $db_connect)
+{
+    $users = [];
+    $sql = "SELECT * FROM users WHERE email = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$email]);
     mysqli_stmt_execute($stmt);
@@ -51,16 +40,22 @@ function searchUserByEmail($email, $db_connect){
 }
 
 
-// Функция поиска категорий пользователя
-function searchUserCategories($id_user, $db_connect){
-    $categories= [];
+/**
+ * Функция поиска категорий пользователя
+ * @param $id_user - ID пользователя для которого ищем категории
+ * @param $db_connect - соединение с БД
+ * @return string[]- возвращает категории для выбранного пользователя
+ */
+function searchUserCategories($id_user, $db_connect)
+{
+    $categories = [];
     $sql = "SELECT * FROM categories WHERE user_id = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $name_categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
-    foreach ($name_categories as $key =>  $item) {
+    foreach ($name_categories as $key => $item) {
         $categories[] = $item;
 
     }
@@ -69,24 +64,27 @@ function searchUserCategories($id_user, $db_connect){
 }
 
 
-//Функция поиска задач пользователя
-function searchUserTasks($id_user, $db_connect){
-    $tasks= [];
+/**
+ * Функция поиска задач пользователя
+ * @param $id_user - ID пользователя для которого ищем задачи
+ * @param $db_connect - соединение с БД
+ * @return string[]- возвращает задачи для выбранного пользователя
+ */
+function searchUserTasks($id_user, $db_connect)
+{
+    $tasks = [];
     $sql = "SELECT name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls FROM tasks WHERE user_id = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $name_tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
-//    $name_categories = mysqli_fetch_assoc($res);
-    foreach ($name_tasks as $key =>  $item) {
+    foreach ($name_tasks as $key => $item) {
         $tasks[] = $item;
-//        $tasks = $item;
     }
 
     return $tasks;
 }
-
 
 
 /**
@@ -110,11 +108,15 @@ function calc_category($massif_fun, $category_fun)
     return $sum_fun;
 }
 
-//функция фильтрации входящих данных
+
+/**
+ * функция фильтрации входящих данных
+ * @param $str - входящие данные преобразования специальнях символов в HTML-сущности
+ * @return string возвращает строчку в котоой преобразованы специальные символы в HTML-сущности
+ */
 function html_sc($str)
 {
     $text = htmlspecialchars($str);
-    //$text = strip_tags($str);
 
     return $text;
 }
@@ -135,7 +137,6 @@ function get_important_task_class_name($task_data_calc)
         if ((($task_data - $cur_data) / 86400) <= 1) {
 
             $result = 'task--important';
-
 
         }
 

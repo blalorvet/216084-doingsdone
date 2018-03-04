@@ -217,7 +217,7 @@ if (isset($_GET['add_task']) || (count($errors))) {
         $layout_way_to_page = 'templates/guest.php';
 
     } else {
-        $popap_add_task = render('templates/form_task.php', [
+        $popap_add_task = render('templates/add_task.php', [
             'errors' => $errors,
             'categories' => $categories,
             'task_fields' => $task_fields

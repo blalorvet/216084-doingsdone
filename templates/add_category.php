@@ -1,4 +1,9 @@
+<?PHP
+//Форма для добавления новой категории(проекта)
+/** @var $cat_errors string[] */
 
+
+?>
 <div class="modal">
 
     <?php $classname = isset($cat_errors) ? "form__input--error" : "";?>

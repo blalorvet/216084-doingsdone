@@ -1,4 +1,5 @@
 <?php
+/**Формма для добавления новой задачи  */
 /** @var $categories string[] */
 /** @var $task_fields string[] */
 /** @var $errors string[] */

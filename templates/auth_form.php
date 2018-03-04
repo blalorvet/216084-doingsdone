@@ -1,4 +1,5 @@
 <?PHP
+/**Формма аутентификации пользователя */
 /** @var $auth_errors string[] */
 /** @var $form string[] */
 

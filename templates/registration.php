@@ -1,5 +1,6 @@
 <?php
-/** @var $auth_errors string[] */
+/** Страница регистрации нового пользователя */
+/** @var $reg_errors string[] */
 /** @var $form string[] */
 ?>
 <div class="modal">

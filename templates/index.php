@@ -1,9 +1,10 @@
 <?php
-/** @var $show_complete_tasks int*/
-/** @var $tasks []*/
-/** @var $show_popap_add_task []*/
+/** Шаблон, который выводит список задач */
+/** @var $show_complete_tasks int */
+/** @var $tasks [] */
+/** @var $show_popap_add_task [] */
 ?>
-<?//= $show_popap_add_task; ?>
+
 <h2 class="content__main-heading">Список задач</h2>
 
 <form class="search-form" action="index.html" method="post">
@@ -31,7 +32,6 @@
             <span class="checkbox__text">Показывать выполненные</span>
 
 
-
         </a>
     </label>
 </div>
@@ -40,8 +40,8 @@
 <table class="tasks">
 
     <?php foreach ($tasks as $key => $item) : ?>
-        <?php if ( $item['task_controls'] === null || $show_complete_tasks == 1) : ?>
-            <tr class="tasks__item task <?= ($item['task_controls'] != null) ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
+        <?php if ($item['task_controls'] === null || $show_complete_tasks == 1) : ?>
+            <tr class="tasks__item task <?= ($item['task_controls'] != null) ? "task--completed" : ""; ?> <?= html_sc(get_important_task_class_name($item ['task_date'])); ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden"

@@ -1,11 +1,10 @@
 <?PHP
+/** Гостевая страница проекта для не аутентифицированных пользователей */
 /** @var  $body_overlay_class_guest string*/
+/** @var  $body_overlay_class_reg string*/
 /** @var  $auth_form string[]*/
 /** @var  $auth_errors string[]*/
 /** @var  $popap_add_task string*/
-
-
-
 ?>
 
 

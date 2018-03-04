@@ -15,9 +15,10 @@ foreach ($required as $key) {
 
     }
 }
+$db_task_name = $_POST['add_task_name'];
 if (empty($errors)) {
 
-    $db_task_name = $_POST['add_task_name'];
+
     $db_task_user_id = $user_sesion['id'];
     $db_task_category_id = $_POST['project'];
     $db_task_deadline = $_POST['date'];
@@ -30,20 +31,11 @@ if (empty($errors)) {
     if ($res) {
 
 
-    } else {
-
-        echo(mysqli_error($link));
+        echo(mysqli_error($db_connect));
 
 
     }
 
-
-//    array_unshift($tasks, array(// добавляем новую задачу в начало массива задачь
-//            "task_name" => $_POST['add_task_name'],
-//            "task_date" => $_POST['date'],
-//            "task_category" => $_POST['project']
-//        )
-//    );
 
     if (isset($_FILES['preview']['add_task_name'])) { // Загрузка файла в корневую дирректорию
 

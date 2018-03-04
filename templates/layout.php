@@ -1,13 +1,12 @@
 <?php
-/** @var $title string*/
-/** @var $content string*/
-/** @var $categories string[]*/
-/** @var $tasks []*/
-/** @var $body_overlay_class string*/
-/** @var $category_get_id string*/
-/** @var $body_overlay_class_add_category string*/
-
-
+/** Шаблок в котором выводятся прокеты аутентифицированного пользователя  */
+/** @var $title string */
+/** @var $content string */
+/** @var $categories string[] */
+/** @var $tasks [] */
+/** @var $body_overlay_class string */
+/** @var $category_get_id string */
+/** @var $body_overlay_class_add_category string */
 
 
 ?>
@@ -21,7 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="<?= $body_overlay_class ?> <?= $body_overlay_class_add_category ?>" ><!--class="overlay"-->
+<body class="<?= $body_overlay_class ?> <?= $body_overlay_class_add_category ?>"><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -40,7 +39,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?= $user_first_name?></p>
+                        <p><?= $user_first_name ?></p>
 
                         <a href="/?logout">Выйти</a>
                     </div>
@@ -56,13 +55,15 @@
                     <ul class="main-navigation__list">
 
                         <!-- Список проектов из простого массива -->
-                        <?PHP foreach ($categories as  $category) : ?>
-                            <?//= gettype($category_get_id) ?>
-                            <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
-<!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
-                                <a class="main-navigation__list-item-link" href="?category=<?= $category['id']; ?>" > <?= html_sc($category['name']); ?>  </a>
+                        <?PHP foreach ($categories as $category) : ?>
+
+                            <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id) ? "main-navigation__list-item--active" : ""; ?>">
+                                <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
+                                <a class="main-navigation__list-item-link"
+                                   href="?category=<?= $category['id']; ?>"> <?= html_sc($category['name']); ?>  </a>
                                 <span
-                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category['id']);  ?></span>
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks,
+                                        $category['id']); ?></span>
 
                             </li>
 
@@ -70,7 +71,8 @@
                     </ul>
                 </nav>
 
-                <a class="button button--transparent button--plus content__side-button" href="/?add_category">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/?add_category">Добавить
+                    проект</a>
             </section>
 
 
@@ -84,7 +86,7 @@
         </div>
     </div>
 </div>
-<?= $popap_add_task?>
+<?= $popap_add_task ?>
 <footer class="main-footer">
     <div class="container">
         <div class="main-footer__copyright">
@@ -93,7 +95,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus"  href="/?add_task" >Добавить задачу</a>
+        <a class="main-footer__button button button--plus" href="/?add_task">Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>

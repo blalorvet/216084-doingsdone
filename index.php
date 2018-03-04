@@ -1,13 +1,14 @@
 <?php
+//Проект немного не закончен, можно проверять, все правки будут залиты после первой проверки
+
+
 session_start(); // старт сессии
 require_once('database.php');// файл для подключения БД
-require_once('userdata.php');// вызваем файл с массивом e-mail адресов и хэшей пароля пользователей
 require_once('functions.php');// вызваем файл с функциями
 require_once('mysql_helper.php');// файл для подключения БД
 
 
 //Значения переменных по умолчанию
-
 $layout_way_to_page = '';
 $popap_add_task = '';
 $filtered_task = [];
@@ -26,15 +27,12 @@ $user_first_name ='';
 $show_popap_add_task = [];
 $categories [] = array("id" => 0,
     "name" => "Все"  );
-
-
 $user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
 $category_user_id =[];
 $category_user_name =[];
-
 
 
 //Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
@@ -49,7 +47,6 @@ if (isset($_SESSION['user'])) {
     $user_sesion = ($_SESSION['user']);
 
     $user_first_name = $user_sesion['first_name'];
-    var_export($user_first_name);
     $categories = array_merge ($categories, searchUserCategories($user_sesion['id'], $db_connect ));
     $tasks = searchUserTasks ($user_sesion['id'], $db_connect );
     foreach($categories as $category){
@@ -65,15 +62,26 @@ if (isset($_SESSION['user'])) {
 }
 
 
+
 //Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
 if (isset($_POST['reg_form'])) {
     include_once 'registration_controller.php';
 
 }
 
+//Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
+if (isset($_POST['add_task'])) {
+    include_once 'add_task_controller.php';
+}
+
+//Добавление новой КАТЕГОРИИ  - Из запроса POST забираем обязательные для заполнения поля
+if (isset($_POST['add_category'])) {
+    include_once 'add_category_controller.php';
+}
+
+
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
-
 $expire = strtotime("+30 days");
 $path = "/";
 if (isset($_GET['show_completed'])) {
@@ -143,50 +151,7 @@ $sql = "";
 $test = 'OK';
 
 
-//Массив с задачами
-//$tasks = [];
-//$tasks[] = array(
-//    "task_name" => "Собеседование в IT компании",
-//    "task_date" => "01.06.2018",
-//    "task_category" => "Работа",
-//    "task_controls" => "Нет"
-//);
-//$tasks[] = array(
-//    "task_name" => "Выполнить тестовое задание",
-//    "task_date" => "25.05.2018",
-//    "task_category" => "Работа",
-//    "task_controls" => "Нет"
-//);
-//$tasks[] = array(
-//    "task_name" => "Сделать задание первого раздела",
-//    "task_date" => "21.04.2018",
-//    "task_category" => "Учеба",
-//    "task_controls" => "Да"
-//);
-//$tasks[] = array(
-//    "task_name" => "Встреча с другом",
-//    "task_date" => "22.04.2018",
-//    "task_category" => "Входящие",
-//    "task_controls" => "Нет"
-//);
-//$tasks[] = array(
-//    "task_name" => "Купить корм для кота",
-//    "task_date" => "11.02.2018",
-//    "task_category" => "Домашние дела",
-//    "task_controls" => "Нет"
-//);
-//$tasks[] = array(
-//    "task_name" => "Заказать пиццу",
-//    "task_date" => "Нет",
-//    "task_category" => "Домашние дела",
-//    "task_controls" => "Нет"
-//);
 
-
-//Добавление новой КАТЕГОРИИ  - Из запроса POST забираем обязательные для заполнения поля
-if (isset($_POST['add_category'])) {
-    include_once 'add_category_controller.php';
-}
 
 
 
@@ -204,10 +169,6 @@ if (isset($_GET['add_category']) || (count($errors))) {
 }
 
 
-//Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
-if (isset($_POST['add_task'])) {
-    include_once 'add_task_controller.php';
-}
 
 
 

@@ -17,27 +17,10 @@ foreach ($required as $key) {
 }
 if (empty($errors)) {
 
-//    $db_reg_email = $form['reg_email'];
-//    $form['reg_password'] = password_hash($form['reg_password'], PASSWORD_DEFAULT); // Хэшированние пароля
-//    $db_reg_name = $form['reg_name'];
-
     $db_task_name  = $_POST['add_task_name'];
     $db_task_user_id = $user_sesion['id'];
     $db_task_category_id = $_POST['project'];
     $db_task_deadline = $_POST['date'];
-
-
-print('<br>$db_task_name  = ');
-    var_dump($db_task_name);
-    print('<br> $db_task_user_id = ');
-    var_dump($db_task_user_id);
-    print('<br> $db_task_category_id = ');
-    var_dump($db_task_category_id);
-    print('<br> $db_task_deadline = ');
-    var_dump($db_task_deadline);
-
-
-
 
     $sql = "INSERT INTO tasks (name, user_id , category_id, deadline, date_add) VALUE (?,?,?,?,NOW())";
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$db_task_name, $db_task_user_id, $db_task_category_id, $db_task_deadline]);

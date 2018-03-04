@@ -17,6 +17,7 @@ $add_task = null;
 $path = [];
 $show_complete_tasks = '0';
 $errors = [];
+$cat_errors = [];
 $tasks = [];
 $task_fields = [];
 $form = [];
@@ -182,10 +183,33 @@ $test = 'OK';
 //);
 
 
+//Добавление новой КАТЕГОРИИ  - Из запроса POST забираем обязательные для заполнения поля
+if (isset($_POST['add_category'])) {
+    include_once 'add_category_controller.php';
+}
+
+
+
+//Добавление новой КАТЕГОРИИИ  - Проверяем есть ли в строке запрос  и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
+if (isset($_GET['add_category']) || (count($errors))) {
+    if (!isset($_SESSION['user'])) {
+        $layout_way_to_page = 'templates/guest.php';
+
+    } else {
+        $popap_add_task = render('templates/add_category.php', [
+            '$cat_errors' => $cat_errors
+        ]);
+    }
+
+}
+
+
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
     include_once 'add_task_controller.php';
 }
+
+
 
 //Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
 if (isset($_GET['add_task']) || (count($errors))) {
@@ -201,6 +225,13 @@ if (isset($_GET['add_task']) || (count($errors))) {
     }
 
 }
+
+
+
+
+
+
+
 
 //Вывод задач в соответствии с выбранным проектом(категорией)
 if (!isset($_GET['category'])) {  // вернет истину если нет параметра или параметр равен null, ноль, пустая строка или строка из нуля Тут если запрос пустой то выводим все задачи
@@ -255,6 +286,7 @@ $layout_content = render($layout_way_to_page, [
     'body_overlay_class' => isset($_GET['add_task']) || (count($errors)) ? "overlay" : "",
     'body_overlay_class_guest' => isset($_GET['enter']) || (count($reg_errors)) ? "overlay" : "",
     'body_overlay_class_reg' => isset($_GET['registration']) || (count($auth_errors)) ? "overlay" : "",
+    'body_overlay_class_add_category' => isset($_GET['add_category']) || (count($cat_errors)) ? "overlay" : "",
     'popap_add_task' => $popap_add_task,
     'content' => $page_content,
     'categories' => $categories,

@@ -5,6 +5,7 @@
 /** @var $tasks []*/
 /** @var $body_overlay_class string*/
 /** @var $category_get_id string*/
+/** @var $body_overlay_class_add_category string*/
 
 
 
@@ -19,8 +20,8 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<? print($test_email)?>
-<body class="<?= $body_overlay_class ?>" ><!--class="overlay"-->
+
+<body class="<?= $body_overlay_class ?> <?= $body_overlay_class_add_category ?>" ><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -69,7 +70,7 @@
                     </ul>
                 </nav>
 
-                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/?add_category">Добавить проект</a>
             </section>
 
 

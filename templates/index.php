@@ -40,8 +40,8 @@
 <table class="tasks">
 
     <?php foreach ($tasks as $key => $item) : ?>
-        <?php if ( $item['task_controls'] === "Нет" || $show_complete_tasks == 1) : ?>
-            <tr class="tasks__item task <?= ($item['task_controls'] === "Да") ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
+        <?php if ( $item['task_controls'] === null || $show_complete_tasks == 1) : ?>
+            <tr class="tasks__item task <?= ($item['task_controls'] != null) ? "task--completed" : "";?> <?= html_sc(get_important_task_class_name($item ['task_date']));?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden"

@@ -40,7 +40,7 @@ function render(
 
 //Функция для поиска e-mail пользователя в БД
 function searchUserByEmail($email, $db_connect){
-
+    $users =[];
   $sql = "SELECT * FROM users WHERE email = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$email]);
@@ -62,7 +62,7 @@ function searchUserByEmail($email, $db_connect){
 }
 
 function searchUserCategories($id_user, $db_connect){
-
+    $categories= [];
     $sql = "SELECT * FROM categories WHERE user_id = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
@@ -70,15 +70,49 @@ function searchUserCategories($id_user, $db_connect){
     $res = mysqli_stmt_get_result($stmt);
     $name_categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
 //    $name_categories = mysqli_fetch_assoc($res);
-    foreach ($name_categories as $item) {
-        $categories[] = $item['name'];
+    foreach ($name_categories as $key =>  $item) {
+        $categories[] = $item;
+    
+//    foreach ($name_categories as  $item) {
+//        $categories[$item['id']] = $item['name'];
+
     }
 //    var_dump($categories);
 //    print('<br> $categories = ');
 //    print_r($categories);
     return $categories;
 }
+//(name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls, )
+//Функция поиска задач пользователя
+function searchUserTasks($id_user, $db_connect){
+    $tasks= [];
+    $sql = "SELECT name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls FROM tasks WHERE user_id = ?";
+    $res = mysqli_prepare($db_connect, $sql);
+    $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $name_tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
+//    $name_categories = mysqli_fetch_assoc($res);
+    foreach ($name_tasks as $key =>  $item) {
+        $tasks[] = $item;
+//        $tasks = $item;
+    }
 
+    return $tasks;
+}
+
+//Функция вывода категорий для пользователя
+//function  list_categories ( $user_id,  $array_categories) {
+//
+//
+//    $user_category=[];
+//    foreach ($array_categories as $category);{
+//        $user_category[]= $category['$user_id'];
+//    }
+//
+//    return $user_category;
+//
+//}
 
 
 /**
@@ -90,7 +124,7 @@ function searchUserCategories($id_user, $db_connect){
 function calc_category($massif_fun, $category_fun)
 {
     $sum_fun = 0;
-    if ($category_fun === "Все") {
+    if ($category_fun === 0) {
         $sum_fun = count($massif_fun);
     } else {
         foreach ($massif_fun as $key => $item) {

@@ -19,22 +19,37 @@ $add_task = null;
 $path = [];
 $show_complete_tasks = '0';
 $errors = [];
+$tasks = [];
 $task_fields = [];
 $form = [];
 $auth_form = '';
 $show_popap_add_task = [];
-$categories= [];
+$categories [] = array("id" => 0,
+    "name" => "Все"  );
+
 $user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
+$category_user_id =[];
+
+
+
+//Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
+if (isset($_POST['auth_form'])) {
+    include_once 'auth_controller.php';
+}
+
+
 
 //проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
 if (isset($_SESSION['user'])) {
     $user_sesion = ($_SESSION['user']);
-
-    $categories = searchUserCategories($user_sesion['id'], $db_connect );
-
+    $categories = array_merge ($categories, searchUserCategories($user_sesion['id'], $db_connect ));
+    $tasks = searchUserTasks ($user_sesion['id'], $db_connect );
+    foreach($categories as $category){
+        $category_user_id [] = $category['id'];
+    }
 
     $layout_way_to_page = 'templates/layout.php';
 
@@ -76,10 +91,6 @@ if (isset($_GET['show_completed'])) {
 }
 
 
-//Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
-if (isset($_POST['auth_form'])) {
-    include_once 'auth_controller.php';
-}
 
 
 // Аутентификации - Проверяем есть ли в строке запрос enter и если есть то показываем попап
@@ -128,43 +139,43 @@ $test = 'OK';
 
 
 //Массив с задачами
-$tasks = [];
-$tasks[] = array(
-    "task_name" => "Собеседование в IT компании",
-    "task_date" => "01.06.2018",
-    "task_category" => "Работа",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Выполнить тестовое задание",
-    "task_date" => "25.05.2018",
-    "task_category" => "Работа",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Сделать задание первого раздела",
-    "task_date" => "21.04.2018",
-    "task_category" => "Учеба",
-    "task_controls" => "Да"
-);
-$tasks[] = array(
-    "task_name" => "Встреча с другом",
-    "task_date" => "22.04.2018",
-    "task_category" => "Входящие",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Купить корм для кота",
-    "task_date" => "11.02.2018",
-    "task_category" => "Домашние дела",
-    "task_controls" => "Нет"
-);
-$tasks[] = array(
-    "task_name" => "Заказать пиццу",
-    "task_date" => "Нет",
-    "task_category" => "Домашние дела",
-    "task_controls" => "Нет"
-);
+//$tasks = [];
+//$tasks[] = array(
+//    "task_name" => "Собеседование в IT компании",
+//    "task_date" => "01.06.2018",
+//    "task_category" => "Работа",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Выполнить тестовое задание",
+//    "task_date" => "25.05.2018",
+//    "task_category" => "Работа",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Сделать задание первого раздела",
+//    "task_date" => "21.04.2018",
+//    "task_category" => "Учеба",
+//    "task_controls" => "Да"
+//);
+//$tasks[] = array(
+//    "task_name" => "Встреча с другом",
+//    "task_date" => "22.04.2018",
+//    "task_category" => "Входящие",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Купить корм для кота",
+//    "task_date" => "11.02.2018",
+//    "task_category" => "Домашние дела",
+//    "task_controls" => "Нет"
+//);
+//$tasks[] = array(
+//    "task_name" => "Заказать пиццу",
+//    "task_date" => "Нет",
+//    "task_category" => "Домашние дела",
+//    "task_controls" => "Нет"
+//);
 
 
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
@@ -223,16 +234,21 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 } else {
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
 
+
+
     if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
         $filtered_task = $tasks;
     }
+
     foreach ($tasks as $key => $task) {
-        if (in_array($categories[$category_get_id], $categories) != 1) {
+
+        if (in_array($category_get_id, $category_user_id) != true) {
+
             $way_to_page = 'templates/error.php';
             break;
         }
 
-        if ($task['task_category'] === $categories[$category_get_id]) {
+            if ($task['task_category'] === $category_get_id) {
             $filtered_task[] = $task;
 
 

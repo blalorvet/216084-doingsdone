@@ -55,13 +55,14 @@
                     <ul class="main-navigation__list">
 
                         <!-- Список проектов из простого массива -->
-                        <?PHP foreach ($categories as $index => $category) : ?>
+                        <?PHP foreach ($categories as  $category) : ?>
                             <?//= gettype($category_get_id) ?>
-                            <li class="main-navigation__list-item <?= ($index === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
+                            <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id ) ? "main-navigation__list-item--active" : "";  ?>">
 <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
-                                <a class="main-navigation__list-item-link" href="?category=<?= $index; ?>" > <?= html_sc($category); ?>  </a>
+                                <a class="main-navigation__list-item-link" href="?category=<?= $category['id']; ?>" > <?= html_sc($category['name']); ?>  </a>
                                 <span
-                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category);  ?></span>
+                                    class="main-navigation__list-item-count"><?= $result_fun = calc_category($tasks, $category['id']);  ?></span>
+
                             </li>
 
                         <?php endforeach; ?>

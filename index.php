@@ -6,8 +6,6 @@ require_once('functions.php');// вызваем файл с функциями
 require_once('mysql_helper.php');// файл для подключения БД
 
 
-//Массив с проектамаи(категориями)
-//$categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 //Значения переменных по умолчанию
 
 $layout_way_to_page = '';
@@ -23,15 +21,18 @@ $tasks = [];
 $task_fields = [];
 $form = [];
 $auth_form = '';
+$user_first_name ='';
 $show_popap_add_task = [];
 $categories [] = array("id" => 0,
     "name" => "Все"  );
+
 
 $user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
 $category_user_id =[];
+$category_user_name =[];
 
 
 
@@ -45,10 +46,14 @@ if (isset($_POST['auth_form'])) {
 //проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
 if (isset($_SESSION['user'])) {
     $user_sesion = ($_SESSION['user']);
+
+    $user_first_name = $user_sesion['first_name'];
+    var_export($user_first_name);
     $categories = array_merge ($categories, searchUserCategories($user_sesion['id'], $db_connect ));
     $tasks = searchUserTasks ($user_sesion['id'], $db_connect );
     foreach($categories as $category){
         $category_user_id [] = $category['id'];
+        $category_user_name[] = $category['name'];
     }
 
     $layout_way_to_page = 'templates/layout.php';
@@ -94,7 +99,6 @@ if (isset($_GET['show_completed'])) {
 
 
 // Аутентификации - Проверяем есть ли в строке запрос enter и если есть то показываем попап
-//if (isset($_GET['enter']) || (count($errors))) {
 if (isset($_GET['enter'])) {
     if (isset($_SESSION['user'])) {
         $layout_way_to_page = 'templates/layout.php';
@@ -180,37 +184,7 @@ $test = 'OK';
 
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
-
-    $required = ['add_task_name', 'project'];
-//В цикле проверяем заполнены поля или нет, если не заполнены то передаем значение не заполненного поля в масси Errors
-    foreach ($required as $key) {
-
-        if (empty($_POST[$key])) {
-
-            $errors[$key] = 'Это поле надо заполнить';
-
-        } else {
-
-            $task_fields[$key] = $_POST[$key];
-
-        }
-    }
-    if (empty($errors)) {
-
-        array_unshift($tasks, array(// добавляем новую задачу в начало массива задачь
-                "task_name" => $_POST['add_task_name'],
-                "task_date" => $_POST['date'],
-                "task_category" => $_POST['project']
-            )
-        );
-
-        if (isset($_FILES['preview']['add_task_name'])) { // Загрузка файла в корневую дирректорию
-
-            $path = $_FILES['preview']['add_task_name'];
-            $res = move_uploaded_file($_FILES['preview']['tmp_name'], '' . $path);
-
-        }
-    }
+    include_once 'add_task_controller.php';
 }
 
 //Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
@@ -286,7 +260,8 @@ $layout_content = render($layout_way_to_page, [
     'categories' => $categories,
     'title' => 'Дела в порядке',
     'tasks' => $tasks,
-    'category_get_id' => $category_get_id
+    'category_get_id' => $category_get_id,
+    'user_first_name' => $user_first_name
 
 ]);
 // выводим весь собраныый контент на страницу из шаблонов

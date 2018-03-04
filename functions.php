@@ -46,21 +46,12 @@ function searchUserByEmail($email, $db_connect){
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$email]);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
-//    $users = mysqli_fetch_all($res, MYSQLI_ASSOC);
     $users = mysqli_fetch_assoc($res);
-//
-//    $sql = "SELECT * FROM users WHERE email = '$email'";
-//    $result_1 = mysqli_query($db_connect, $sql);
-//    $users_1 = mysqli_fetch_assoc($result_1);
-
-//   var_dump($result);
-//    print('<br> $users_1 = ');
-//
-//    print('<br> $users = ');
-//    var_dump($users);
     return $users;
 }
 
+
+// Функция поиска категорий пользователя
 function searchUserCategories($id_user, $db_connect){
     $categories= [];
     $sql = "SELECT * FROM categories WHERE user_id = ?";
@@ -69,20 +60,15 @@ function searchUserCategories($id_user, $db_connect){
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $name_categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
-//    $name_categories = mysqli_fetch_assoc($res);
     foreach ($name_categories as $key =>  $item) {
         $categories[] = $item;
-    
-//    foreach ($name_categories as  $item) {
-//        $categories[$item['id']] = $item['name'];
 
     }
-//    var_dump($categories);
-//    print('<br> $categories = ');
-//    print_r($categories);
+
     return $categories;
 }
-//(name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls, )
+
+
 //Функция поиска задач пользователя
 function searchUserTasks($id_user, $db_connect){
     $tasks= [];
@@ -101,22 +87,10 @@ function searchUserTasks($id_user, $db_connect){
     return $tasks;
 }
 
-//Функция вывода категорий для пользователя
-//function  list_categories ( $user_id,  $array_categories) {
-//
-//
-//    $user_category=[];
-//    foreach ($array_categories as $category);{
-//        $user_category[]= $category['$user_id'];
-//    }
-//
-//    return $user_category;
-//
-//}
 
 
 /**
- * функция подсчитывае общее количество задачь
+ * функция подсчитывае общее количество задач в категориях
  * @param $massif_fun - в  эту переменную отправляется массив
  * @param $category_fun - в эту переменную отправляется ключ массива
  * @return int - возвращает обшее количество задачь

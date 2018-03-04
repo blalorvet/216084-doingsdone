@@ -41,11 +41,12 @@
             <select class="form__input form__input--select <?= $class_project ?> " name="project" id="project"  >
                 <option value="">Выберите проект</option>
                <? array_shift($categories);// удалил первый элемент из массива ?>
-                <?PHP foreach ($categories as $index => $category) : ?>
+
+                <?PHP foreach ($categories as  $category) : ?>
                     <option
-                        value="<?= $category; ?>">
-                        <?= $category; ?>
-                        <?= isset($task_fields['project'])&& $task_fields['project']=$category ? 'selected' :"" ?>
+                        value="<?= $category['id']; ?>">
+                        <?= $category['name'] ?>
+                        <?= isset($task_fields['project'])&& $task_fields['project']=$category ['name']? 'selected' :"" ?>
                     </option>
                 <?php endforeach; ?>
 

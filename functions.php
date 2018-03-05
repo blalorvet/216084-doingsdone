@@ -40,6 +40,40 @@ function searchUserByEmail($email, $db_connect)
 }
 
 
+function formate_task_date ($date){
+    if (empty($date) ){
+        return 'Нет';
+    }
+     $time = strtotime($date);
+    if ($time === false){
+        return 'Нет';
+    }
+    return date('d.m.Y', $time);
+
+}
+
+// Функция меняет задачу
+
+function add_data_end_to_task ( $task_id,   $db_connect) {
+    $sql = "  UPDATE  tasks SET     date_end = IF(date_end IS NULL, NOW(), NULL)
+WHERE    id = ? AND user_id = ?";
+
+    $stmt = db_get_prepare_stmt($db_connect, $sql,
+        [$task_id, $_SESSION['user']['id']]);
+    $res = mysqli_stmt_execute($stmt);
+
+    if ($res) {
+
+
+        echo(mysqli_error($db_connect));
+
+
+    }
+}
+
+
+
+
 /**
  * Функция поиска категорий пользователя
  * @param $id_user - ID пользователя для которого ищем категории
@@ -73,7 +107,7 @@ function searchUserCategories($id_user, $db_connect)
 function searchUserTasks($id_user, $db_connect)
 {
     $tasks = [];
-    $sql = "SELECT name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls FROM tasks WHERE user_id = ?";
+    $sql = "SELECT id AS id, name AS task_name, deadline AS task_date,  category_id AS task_category, date_end AS task_controls FROM tasks WHERE user_id = ?";
     $res = mysqli_prepare($db_connect, $sql);
     $stmt = db_get_prepare_stmt($db_connect, $sql, [$id_user]);
     mysqli_stmt_execute($stmt);

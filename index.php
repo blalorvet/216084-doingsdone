@@ -23,16 +23,18 @@ $tasks = [];
 $task_fields = [];
 $form = [];
 $auth_form = '';
-$user_first_name ='';
+$user_first_name = '';
 $show_popap_add_task = [];
-$categories [] = array("id" => 0,
-    "name" => "Все"  );
+$categories [] = array(
+    "id" => 0,
+    "name" => "Все"
+);
 $user_sesion = [];
 $auth_errors = [];
 $reg_errors = [];
 $category_get_id = 0;
-$category_user_id =[];
-$category_user_name =[];
+$category_user_id = [];
+$category_user_name = [];
 
 
 //Форма авторизации - проверка на пустые поля, наличие почты и правильный пароль
@@ -41,15 +43,13 @@ if (isset($_POST['auth_form'])) {
 }
 
 
-
 //проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
 if (isset($_SESSION['user'])) {
     $user_sesion = ($_SESSION['user']);
-
     $user_first_name = $user_sesion['first_name'];
-    $categories = array_merge ($categories, searchUserCategories($user_sesion['id'], $db_connect ));
-    $tasks = searchUserTasks ($user_sesion['id'], $db_connect );
-    foreach($categories as $category){
+    $categories = array_merge($categories, searchUserCategories($user_sesion['id'], $db_connect));
+    $tasks = searchUserTasks($user_sesion['id'], $db_connect);
+    foreach ($categories as $category) {
         $category_user_id [] = $category['id'];
         $category_user_name[] = $category['name'];
     }
@@ -60,7 +60,6 @@ if (isset($_SESSION['user'])) {
     $layout_way_to_page = 'templates/guest.php';
 
 }
-
 
 
 //Форма РЕГИСТРАЦИИ - проверка на пустые поля, наличие почты и правильный пароль
@@ -79,6 +78,22 @@ if (isset($_POST['add_category'])) {
     include_once 'add_category_controller.php';
 }
 
+
+// Чекбокс - Завершение задачи и возвращение обратно
+
+if (isset($_GET['toggle_task'])) {
+    $task_id = (int)$_GET['toggle_task'];
+    if (isset($_SESSION['user'])) {
+        $layout_way_to_page = 'templates/layout.php';
+        add_data_end_to_task($task_id, $db_connect);
+//       var_dump( $_SERVER['HTTP_REFERER']);
+
+
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+
+    }
+
+}
 
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
@@ -105,8 +120,6 @@ if (isset($_GET['show_completed'])) {
 }
 
 
-
-
 // Аутентификации - Проверяем есть ли в строке запрос enter и если есть то показываем попап
 if (isset($_GET['enter'])) {
     if (isset($_SESSION['user'])) {
@@ -121,7 +134,7 @@ if (isset($_GET['enter'])) {
     }
 
 }
-
+// Выход  - Проверяем есть ли в строке запрос logout и если есть, то удаляем сессию пользователя
 $path = "/";
 if (isset($_GET['logout'])) {
 
@@ -151,10 +164,6 @@ $sql = "";
 $test = 'OK';
 
 
-
-
-
-
 //Добавление новой КАТЕГОРИИИ  - Проверяем есть ли в строке запрос  и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
 if (isset($_GET['add_category']) || (count($errors))) {
     if (!isset($_SESSION['user'])) {
@@ -167,9 +176,6 @@ if (isset($_GET['add_category']) || (count($errors))) {
     }
 
 }
-
-
-
 
 
 //Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
@@ -188,18 +194,11 @@ if (isset($_GET['add_task']) || (count($errors))) {
 }
 
 
-
-
-
-
-
-
 //Вывод задач в соответствии с выбранным проектом(категорией)
 if (!isset($_GET['category'])) {  // вернет истину если нет параметра или параметр равен null, ноль, пустая строка или строка из нуля Тут если запрос пустой то выводим все задачи
     $filtered_task = $tasks;
 } else {
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
-
 
 
     if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
@@ -214,7 +213,7 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
             break;
         }
 
-            if ($task['task_category'] === $category_get_id) {
+        if ($task['task_category'] === $category_get_id) {
             $filtered_task[] = $task;
 
 
@@ -255,6 +254,7 @@ $layout_content = render($layout_way_to_page, [
     'tasks' => $tasks,
     'category_get_id' => $category_get_id,
     'user_first_name' => $user_first_name
+
 
 ]);
 // выводим весь собраныый контент на страницу из шаблонов

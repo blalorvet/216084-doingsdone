@@ -1,8 +1,10 @@
 <?php
 /** Шаблон, который выводит список задач */
-/** @var $show_complete_tasks int */
+/** @var $show_complete_tasks  */
 /** @var $tasks [] */
 /** @var $show_popap_add_task [] */
+
+
 ?>
 
 <h2 class="content__main-heading">Список задач</h2>
@@ -44,12 +46,16 @@
             <tr class="tasks__item task <?= ($item['task_controls'] != null) ? "task--completed" : ""; ?> <?= html_sc(get_important_task_class_name($item ['task_date'])); ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden"
-                               type="checkbox" <?= ($item['task_controls'] === "Да") ? "checked" : ""; ?> >
+                        <a href="?toggle_task=<?= $item['id'] ?>">
+                            <input class="checkbox__input visually-hidden"
+                               type="checkbox" <?= !empty($item['task_controls'] ) ? "checked" : ""; ?> >
+
+
                         <span class="checkbox__text"> <?= html_sc($item ['task_name']); ?> </span>
+                        </a>
                     </label>
                 </td>
-                <td class="task__date"><?= html_sc($item ['task_date']); ?></td>
+                <td class="task__date"><?= html_sc(formate_task_date($item ['task_date'])); ?></td>
 
                 <td class="task__controls">
                 </td>

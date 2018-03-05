@@ -58,7 +58,7 @@
                         <?PHP foreach ($categories as $category) : ?>
 
                             <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id) ? "main-navigation__list-item--active" : ""; ?>">
-                                <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в списке массива -->
+                                <!--         Ниже в строчке код //$id_categories = array_search($category, $categories);       присваевает ссылке номер равный номеру в массиве -->
                                 <a class="main-navigation__list-item-link"
                                    href="?category=<?= $category['id']; ?>"> <?= html_sc($category['name']); ?>  </a>
                                 <span

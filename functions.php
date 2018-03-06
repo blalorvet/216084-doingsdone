@@ -203,6 +203,11 @@ function deadline_filter($tasks, $deadline_filter)
         $task_data = strtotime($item ['task_date']);
         $sum_data = (($cur_data - $task_data) / 86400);
     switch ($deadline_filter) {
+        case 'default':
+
+            $new_tasks[] = $item;
+
+            break;
 
         case 'task_today':
 

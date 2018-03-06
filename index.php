@@ -88,7 +88,6 @@ if (isset($_GET['toggle_task'])) {
         add_data_end_to_task($task_id, $db_connect);
 
 
-
         header("Location: " . $_SERVER['HTTP_REFERER']);
 
     }
@@ -105,32 +104,34 @@ if (isset($_GET['deadline_filter'])) {
     switch ($_GET['deadline_filter']) {
         case 'default':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
+            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
+//            header("Location: /index.php");
             break;
-        case 'task_today':
-            setcookie("deadline_filter", $_GET['deadline_filter'],
-                null, $path);
-            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
 
+        case 'task_today':
+            setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
+            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
+//            header("Location: /index.php");
             break;
+
         case 'task_tomorrow':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
+            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
             break;
+
         case 'task_overdue':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
+            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
             break;
     }
-    var_dump($_GET['deadline_filter']);
-    var_dump($tasks['deadline']);
-    print(strtotime("now"));
-    print(strtotime("2018-03-06"));
-   header("Location: " . $_SERVER['HTTP_REFERER']);
+//    var_dump($_GET['deadline_filter']);
+//    var_dump($tasks['deadline']);
+//    print(strtotime("now"));
+//    print(strtotime("2018-03-06"));
+    
+}else{
+    setcookie("deadline_filter", 'default' , null, $path);
 }
-
-//        header("Location: " . $_SERVER['HTTP_REFERER']);
-
-
 
 
 

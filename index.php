@@ -86,7 +86,7 @@ if (isset($_GET['toggle_task'])) {
     if (isset($_SESSION['user'])) {
         $layout_way_to_page = 'templates/layout.php';
         add_data_end_to_task($task_id, $db_connect);
-//       var_dump( $_SERVER['HTTP_REFERER']);
+
 
 
         header("Location: " . $_SERVER['HTTP_REFERER']);
@@ -94,6 +94,44 @@ if (isset($_GET['toggle_task'])) {
     }
 
 }
+
+
+// Фильтрация задач
+
+$path = "/";
+if (isset($_GET['deadline_filter'])) {
+
+
+    switch ($_GET['deadline_filter']) {
+        case 'default':
+            setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
+            break;
+        case 'task_today':
+            setcookie("deadline_filter", $_GET['deadline_filter'],
+                null, $path);
+            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
+
+            break;
+        case 'task_tomorrow':
+            setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
+            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
+            break;
+        case 'task_overdue':
+            setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
+            $tasks=deadline_filter($tasks, $_GET['deadline_filter']);
+            break;
+    }
+    var_dump($_GET['deadline_filter']);
+    var_dump($tasks['deadline']);
+    print(strtotime("now"));
+    print(strtotime("2018-03-06"));
+   header("Location: " . $_SERVER['HTTP_REFERER']);
+}
+
+//        header("Location: " . $_SERVER['HTTP_REFERER']);
+
+
+
 
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач

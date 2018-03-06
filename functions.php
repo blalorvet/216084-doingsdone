@@ -40,21 +40,32 @@ function searchUserByEmail($email, $db_connect)
 }
 
 
-function formate_task_date ($date){
-    if (empty($date) ){
+/**
+ *  Функция приведения даты к формату ДД.ММ.ГГГГ, без времени.
+ * @param $date int - изменяемая дата
+ * @return int- возвращает дату в нужном формате
+ */
+function formate_task_date($date)
+{
+    if (empty($date)) {
         return 'Нет';
     }
-     $time = strtotime($date);
-    if ($time === false){
+    $time = strtotime($date);
+    if ($time === false) {
         return 'Нет';
     }
     return date('d.m.Y', $time);
 
 }
 
-// Функция меняет задачу
 
-function add_data_end_to_task ( $task_id,   $db_connect) {
+/**
+ *  Функция изменения статуса задачи выполнена или нет
+ * @param $task_id - ID задачи для которой делаем изменения
+ * @param $db_connect - соединение с БД
+ */
+function add_data_end_to_task($task_id, $db_connect)
+{
     $sql = "  UPDATE  tasks SET     date_end = IF(date_end IS NULL, NOW(), NULL)
 WHERE    id = ? AND user_id = ?";
 
@@ -70,8 +81,6 @@ WHERE    id = ? AND user_id = ?";
 
     }
 }
-
-
 
 
 /**
@@ -178,3 +187,49 @@ function get_important_task_class_name($task_data_calc)
     return $result;
 }
 
+/**
+ * Функция фильтрации задач по дате
+ * @param $tasks string[] - массив с задачами
+ * @param $task_data -  дата дедлайна
+ * @return string возвращает название класса важной задачи task--important или пустую строку
+ */
+function deadline_filter($tasks, $deadline_filter)
+{
+    $cur_data = strtotime("now");
+    $new_tasks = [];
+
+    foreach ($tasks as $key => $item) {
+
+        $task_data = strtotime($item ['task_date']);
+        $sum_data = (($cur_data - $task_data) / 86400);
+    switch ($deadline_filter) {
+
+        case 'task_today':
+
+                if ( $sum_data <= 1 && $sum_data > 0) {
+
+                    $new_tasks[] = $item;
+                }
+            break;
+        case 'task_tomorrow':
+
+            if ( $sum_data < 0 && $sum_data > -1) {
+
+                $new_tasks[] = $item;
+            }
+            break;
+        case 'task_overdue':
+
+            if ( $sum_data <-1) {
+
+                $new_tasks[] = $item;
+            }
+            break;
+
+            }
+
+
+    }
+    return $new_tasks;
+
+}

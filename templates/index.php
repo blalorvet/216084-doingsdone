@@ -14,11 +14,11 @@
 
     <input class="search-form__submit" type="submit" name="" value="Искать">
 </form>
-<? var_dump($_COOKIE['deadline_filter']) ?>
+
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/?deadline_filter=default" class="tasks-switch__item
-        <?= $_COOKIE['deadline_filter'] === 'default' ? "tasks-switch__item--active" : ""; ?>">Все задачи</a>
+        <a href="/?deadline_filter=task_all" class="tasks-switch__item
+        <?= $_COOKIE['deadline_filter'] === 'task_all' ? "tasks-switch__item--active" : ""; ?>">Все задачи</a>
 
         <a href="/?deadline_filter=task_today" class="tasks-switch__item
         <?= $_COOKIE['deadline_filter'] === 'task_today' ? "tasks-switch__item--active" : ""; ?>">Повестка дня</a>

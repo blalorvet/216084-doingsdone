@@ -14,7 +14,7 @@
               $value = isset($form['reg_email']) ? $form['reg_email'] : ""; ?>
               <label class="form__label" for="reg_email">E-mail <sup>*</sup></label>
 
-              <input class="form__input <?=$classname;?>" type="text" name="reg_email" id="reg_email" value="<?=$value;?>" placeholder="Введите e-mail">
+              <input class="form__input <?=$classname;?>" type="text" name="reg_email" id="reg_email" value="<?=html_sc($value);?>" placeholder="Введите e-mail">
 
              <!-- <p class="form__message">E-mail введён некорректно</p> -->
               <p class="<?= isset($reg_errors['reg_email']) ? "form__message" : "";?>">
@@ -29,7 +29,7 @@
               $value = isset($form['reg_password']) ? $form['reg_password'] : ""; ?>
               <label class="form__label" for="reg_password">Пароль <sup>*</sup></label>
 
-              <input class="form__input <?=$classname;?>" type="password" name="reg_password" id="reg_password" value="<?=$value;?>" placeholder="Введите пароль">
+              <input class="form__input <?=$classname;?>" type="password" name="reg_password" id="reg_password" value="" placeholder="Введите пароль">
 
               <p class="<?= isset($reg_errors['reg_password']) ? "form__message" : "";?>">
 
@@ -42,7 +42,7 @@
               $value = isset($form['reg_password']) ? $form['reg_name'] : ""; ?>
               <label class="form__label" for="reg_name">Имя <sup>*</sup></label>
 
-              <input class="form__input <?=$classname;?>" type="text" name="reg_name" id="reg_name" value="<?=$value;?>" placeholder="Введите имя">
+              <input class="form__input <?=$classname;?>" type="text" name="reg_name" id="reg_name" value="<?= html_sc($value);?>" placeholder="Введите имя">
               <p class="<?= isset($reg_errors['reg_name']) ? "form__message" : "";?>">
 
                 <?= isset($reg_errors['reg_name']) ? $reg_errors['reg_name'] : "";?>

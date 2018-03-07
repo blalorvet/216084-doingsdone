@@ -102,37 +102,34 @@ if (isset($_GET['deadline_filter'])) {
 
 
     switch ($_GET['deadline_filter']) {
-        case 'default':
+        case 'task_all':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
-//            header("Location: /index.php");
             break;
 
         case 'task_today':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
-//            header("Location: /index.php");
             break;
 
         case 'task_tomorrow':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
             break;
 
         case 'task_overdue':
             setcookie("deadline_filter", $_GET['deadline_filter'], null, $path);
-            $tasks = deadline_filter($tasks, $_GET['deadline_filter']);
             break;
-    }
-//    var_dump($_GET['deadline_filter']);
-//    var_dump($tasks['deadline']);
-//    print(strtotime("now"));
-//    print(strtotime("2018-03-06"));
-    
-}else{
-    setcookie("deadline_filter", 'default' , null, $path);
-}
 
+        default:
+            setcookie("deadline_filter", 'task_all', null, $path);
+    }
+
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+
+} else {
+    if (!isset($_COOKIE['showcompl'])) {
+        setcookie("deadline_filter", 'task_all', null, $path);
+    }
+
+}
 
 
 // Добавляем куки чтобы отслеживать стоит галочка для отображения выполненных задач
@@ -150,8 +147,9 @@ if (isset($_GET['show_completed'])) {
         $show_complete_tasks = '1';
         setcookie("showcompl", $show_complete_tasks, $expire, $path);
     }
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 } else {
-    if (($_COOKIE['showcompl'])) {
+    if (isset($_COOKIE['showcompl'])) {
         $show_complete_tasks = $_COOKIE['showcompl'];
 
     }
@@ -263,18 +261,12 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 }
 
 
-//$show_popap_add_task = render($popap_add_task, [
-//    'errors' => $errors,
-//    'categories' => $categories,
-//    'show_complete_tasks' => $show_complete_tasks
-//
-//]);
-
 // вызываем функцию render в первом аргументе указываем путь 'templates/index.php' во втором аргументе передаем массив с данными которые будут присутствовать в загружаемом шаблоне 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks
 $page_content = render($way_to_page, [
 
-    'tasks' => $filtered_task,
-    'show_complete_tasks' => $show_complete_tasks
+    'tasks' => deadline_filter($filtered_task, $_COOKIE['deadline_filter']),
+    'show_complete_tasks' => $show_complete_tasks,
+    'db_error' => $db_error
 
 ]);
 

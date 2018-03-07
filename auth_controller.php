@@ -23,7 +23,7 @@ if (!count($auth_errors)) {
                 if (password_verify($form['password'], $user['password'])) {
                     $_SESSION['user'] = $user;
 
-//                    $categories = searchUserCategories($user['id'], $db_connect );
+
 
 
                 } else {
@@ -48,18 +48,8 @@ if (count($auth_errors)) {
         ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
 } else {
 
-//        header("Location: /index.php");
+
     $layout_way_to_page = 'templates/layout.php';
 
-//        exit();
+
 }
-//    Если форма не была отправлена, то проверяем существование сессии с пользователем. Сессия есть - значит пользователь залогинен и ему можно показать страницу приветствия. Сессии нет - показываем форму для входа на сайт.
-//}
-//else {
-//    if (isset($_SESSION['user'])) {
-//
-//        $layout_way_to_page = 'templates/layout.php';
-//    } else {
-//        $layout_way_to_page = 'templates/guest.php';
-//
-//    }

@@ -16,7 +16,7 @@
     <div class="form__row">
       <label class="form__label" for="project_name">Название <sup>*</sup></label>
 
-      <input class="form__input <?=$classname;?> " type="text" name="add_new_category" id="add_new_category" value="" placeholder="Введите название проекта">
+      <input class="form__input <?=$classname;?> " type="text" name="add_new_category" id="add_new_category" value="<?=html_sc($value);?>" placeholder="Введите название проекта">
 
       <p class="<?= isset($cat_errors) ? "form__message" : "";?>">
 

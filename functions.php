@@ -187,51 +187,69 @@ function get_important_task_class_name($task_data_calc)
     return $result;
 }
 
+
+/**
+ * Функция обработки даты для функции deadline_filter
+ * @param $date_1 string - первая дата, текущая
+ * @param $date_2 string - вторая дата,  дата задачи
+ * @return string возвращает название класса важной задачи task--important или пустую строку
+ */
+function dateDifference($date_1, $date_2, $differenceFormat = '%r%a')
+{
+    $datetime1 = date_create($date_1);
+    $datetime2 = date_create($date_2);
+
+    $interval = date_diff($datetime1, $datetime2, false);
+
+    return $interval->format($differenceFormat);
+
+}
+
 /**
  * Функция фильтрации задач по дате
  * @param $tasks string[] - массив с задачами
- * @param $task_data -  дата дедлайна
- * @return string возвращает название класса важной задачи task--important или пустую строку
+ * @param $deadline_filter -  значение куки
+ * @return string возвращает массив с отфильтрованными задачами
  */
-function deadline_filter($tasks, $deadline_filter)
+function deadline_filter($tasks, $deadline_filter = 'task_all')
 {
-    $cur_data = strtotime("now");
+
+    $cur_data = date('Y-m-d');
     $new_tasks = [];
+
 
     foreach ($tasks as $key => $item) {
 
-        $task_data = strtotime($item ['task_date']);
-        $sum_data = (($cur_data - $task_data) / 86400);
-    switch ($deadline_filter) {
-        case 'default':
+        $date_differrent = dateDifference($cur_data, $item['task_date']);
+        switch ($deadline_filter) {
 
-            $new_tasks[] = $item;
+            case 'task_all':
+                $new_tasks[] = $item;
+                break;
 
-            break;
-
-        case 'task_today':
-
-                if ( $sum_data <= 1 && $sum_data > 0) {
-
+            case 'task_today':
+                if ($date_differrent == 0) {
                     $new_tasks[] = $item;
                 }
-            break;
-        case 'task_tomorrow':
+                break;
 
-            if ( $sum_data < 0 && $sum_data > -1) {
+            case 'task_tomorrow':
+                if ($date_differrent == 1) {
+                    $new_tasks[] = $item;
+                }
+                break;
+
+            case 'task_overdue':
+                if ($date_differrent < 0) {
+                    $new_tasks[] = $item;
+                }
+                break;
+
+            default :
 
                 $new_tasks[] = $item;
-            }
-            break;
-        case 'task_overdue':
 
-            if ( $sum_data <-1) {
-
-                $new_tasks[] = $item;
-            }
-            break;
-
-            }
+        }
 
 
     }

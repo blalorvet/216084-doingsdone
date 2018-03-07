@@ -1,6 +1,6 @@
 USE doingsdone;
 
-/* Добавляем в таблицу users трех пользователей данные взял из  файла userdata.php  */
+/* Добавляем в таблицу users трех пользователей данные взял из  файла userdata  */
 
 INSERT INTO users SET email='ignat.v@gmail.com', first_name = 'Игнат', password = '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', date_reg = '2018-02-23T11:30:00';
 INSERT INTO users SET email='kitty_93@li.ru', first_name = 'Леночка', password = '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', date_reg = '2018-02-24T11:30:00';

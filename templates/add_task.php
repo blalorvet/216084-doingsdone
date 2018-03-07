@@ -27,7 +27,7 @@
                 type="text"
                 name="add_task_name"
                 id="add_task_name"
-                value="<?= isset($task_fields['add_task_name']) ? $task_fields['add_task_name']: "" ;?>"
+                value="<?= html_sc(isset($task_fields['add_task_name'])) ? $task_fields['add_task_name']: "" ;?>"
                 placeholder="Введите название">
             <p class="<?= isset($errors['add_task_name'])? "form__message" : "" ; ?> ">Заполните это поле</p>
         </div>

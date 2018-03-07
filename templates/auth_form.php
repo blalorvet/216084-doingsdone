@@ -16,7 +16,7 @@
             $value = isset($form['email']) ? $form['email'] : ""; ?>
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
-            <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=$value;?>" placeholder="Введите e-mail">
+            <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=html_sc($value);?>" placeholder="Введите e-mail">
 
             <p class="<?= isset($auth_errors['email']) ? "form__message" : "";?>">
 

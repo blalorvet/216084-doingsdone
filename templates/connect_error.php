@@ -4,8 +4,7 @@
 /** @var  $auth_form string[]*/
 /** @var  $auth_errors string[]*/
 /** @var  $popap_add_task string*/
-
-
+/** @var $db_error string[] */
 
 ?>
 
@@ -40,16 +39,7 @@
                 <h2 class="welcome__heading">«Дела в порядке»</h2>
 
                 <p class="content__error" > Ошибка подключеник Базе данных. <?= $db_error?>  </p>
-                <?print('<br>');
-                print($db_host);
-                print('<br>');
-                print($db['user']);
 
-                print('<br>');
-                print($db['password']);
-                print('<br>');
-                print($db['database']);
-                ?>
                 <center><a href="/" class="button">Вернуться на главную</a></center>
 
                 <a class="welcome__button button" href="/?registration">Зарегистрироваться</a>

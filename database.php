@@ -8,7 +8,7 @@ include_once('config.php');
 
 $db_connect = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 if (!$db_connect) {
-    echo "Ошибка подключения к базе данных";
+    echo  mysqli_connect_error();
     exit;
 }
 mysqli_set_charset($db_connect, "utf8");

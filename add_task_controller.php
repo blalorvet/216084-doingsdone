@@ -45,14 +45,14 @@ if (empty($errors)) {
         [$db_task_name, $db_task_user_id, $db_task_category_id, $db_task_deadline, $files_path]);
     $res = mysqli_stmt_execute($stmt);
 
-    if ($res) {
+    if (!$res) {
 
 
         echo(mysqli_error($db_connect));
         exit;
 
     }
-    header("Location: " . $_SERVER['SERVER_NAME']);
+    header("Location: http://" . $_SERVER['SERVER_NAME']);
 
 
 }

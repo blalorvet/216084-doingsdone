@@ -240,27 +240,32 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 } else {
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
 
- var_dump($_GET['category']);
 
-    if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
+
+    if ($category_get_id === 0) { // Если равно нулю, то выводим все задачи
         $filtered_task = $tasks;
 
-    }
+    }else {
 
-    foreach ($tasks as $key => $task) {
+        foreach ($tasks as $key => $task) {
 
-        if (in_array($category_get_id, $category_user_id) != true) {
+            if (in_array($category_get_id, $category_user_id) != true) {
 
-            $way_to_page = 'templates/error.php';
-            break;
+                $way_to_page = 'templates/error.php';
+                break;
+            }
+
+            if ($task['task_category'] === $category_get_id) {
+                $filtered_task[] = $task;
+
+
+            }
         }
 
-        if ($task['task_category'] === $category_get_id) {
-            $filtered_task[] = $task;
 
-
-        }
     }
+
+
 
 
 }

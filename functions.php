@@ -99,7 +99,7 @@ function searchUserCategories($id_user, $db_connect)
     $res = mysqli_stmt_get_result($stmt);
     $name_categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
     foreach ($name_categories as $key => $item) {
-        $categories[] = $item;
+        $categories[$item['id']] = $item;
 
     }
 

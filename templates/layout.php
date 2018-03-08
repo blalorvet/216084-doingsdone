@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?= $user_first_name ?></p>
+                        <p><?= html_sc($user_first_name) ?></p>
 
                         <a href="/?logout">Выйти</a>
                     </div>
@@ -54,7 +54,7 @@
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
 
-                        <!-- Список проектов из простого массива -->
+                        <!-- Список проектов из БД -->
                         <?PHP foreach ($categories as $category) : ?>
 
                             <li class="main-navigation__list-item <?= ($category['id'] === $category_get_id) ? "main-navigation__list-item--active" : ""; ?>">

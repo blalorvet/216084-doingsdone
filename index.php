@@ -266,7 +266,7 @@ $page_content = render($way_to_page, [
 
     'tasks' => deadline_filter($filtered_task, $_COOKIE['deadline_filter']),
     'show_complete_tasks' => $show_complete_tasks,
-    'db_error' => $db_error
+
 
 ]);
 

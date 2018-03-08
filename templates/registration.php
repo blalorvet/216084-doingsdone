@@ -45,7 +45,7 @@
               <input class="form__input <?=$classname;?>" type="text" name="reg_name" id="reg_name" value="<?= html_sc($value);?>" placeholder="Введите имя">
               <p class="<?= isset($reg_errors['reg_name']) ? "form__message" : "";?>">
 
-                <?= isset($reg_errors['reg_name']) ? $reg_errors['reg_name'] : "";?>
+                <?= isset($reg_errors['reg_name']) ? html_sc($reg_errors['reg_name']) : "";?>
             </div>
 
 

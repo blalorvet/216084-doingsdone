@@ -10,14 +10,10 @@
 
     <h2 class="modal__heading">Добавление задачи</h2>
 
-
     <form class="form" action="/index.php" method="post" enctype="multipart/form-data">
 
-
         <?php $class_name = isset($errors['add_task_name']) ? "form__input--error" : "";
-        $value = isset($add_new_task['add_task_name']) ? $add_new_task['add_task_name'] : "";
-
-        ?>
+        $value = isset($add_new_task['add_task_name']) ? html_sc($add_new_task['add_task_name']) : ""; ?>
 
         <div class="form__row">
             <label class="form__label" for="add_task_name">Название <sup>*</sup></label>
@@ -27,32 +23,34 @@
                 type="text"
                 name="add_task_name"
                 id="add_task_name"
-                value="<?= html_sc(isset($task_fields['add_task_name'])) ? $task_fields['add_task_name']: "" ;?>"
+                value="<?= (isset($task_fields['add_task_name'])) ? html_sc($task_fields['add_task_name']) : ""; ?>"
                 placeholder="Введите название">
-            <p class="<?= isset($errors['add_task_name'])? "form__message" : "" ; ?> ">Заполните это поле</p>
+
+            <p class="<?= isset($errors['add_task_name']) ? "form__message" : ""; ?> ">Заполните это поле</p>
         </div>
 
         <?php $class_project = isset($errors['project']) ? "form__input--error" : "";
-        $value = isset($add_new_task['project']) ? $add_new_task['project'] : "";
+        $value = isset($add_new_task['project']) ? html_sc($add_new_task['project']) : "";
         ?>
 
         <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-            <select class="form__input form__input--select <?= $class_project ?> " name="project" id="project"  >
+            <select class="form__input form__input--select <?= $class_project ?> " name="project" id="project">
                 <option value="">Выберите проект</option>
-               <? array_shift($categories);// удалил первый элемент из массива ?>
+                <? array_shift($categories);// удалил первый элемент из массива ?>
 
-                <?PHP foreach ($categories as  $category) : ?>
+                <?PHP foreach ($categories as $category) : ?>
                     <option
                         value="<?= $category['id']; ?>">
-                        <?= $category['name'] ?>
-                        <?= isset($task_fields['project'])&& $task_fields['project']=$category ['name']? 'selected' :"" ?>
+                        <?= html_sc($category['name']) ?>
+                        <?= isset($task_fields['project']) && $task_fields['project'] = $category ['name'] ? 'selected' : "" ?>
                     </option>
                 <?php endforeach; ?>
 
             </select>
-            <p class="<?= isset($errors['project']) ? "form__message": "";?>" >Заполните это поле</p>
+
+            <p class="<?= isset($errors['project']) ? "form__message" : ""; ?>">Заполните это поле</p>
 
         </div>
 

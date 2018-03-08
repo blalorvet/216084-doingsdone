@@ -45,7 +45,7 @@ if (count($auth_errors)) {
 
     $layout_way_to_page = 'templates/guest.php';
     $popap_add_task = render('templates/auth_form.php',
-        ['form' => $form, 'auth_errors' => $auth_errors, 'users' => $users]);
+        ['form' => $form, 'auth_errors' => $auth_errors]);
 } else {
 
 

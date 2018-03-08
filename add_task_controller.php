@@ -43,4 +43,5 @@ if (empty($errors)) {
         $res = move_uploaded_file($_FILES['preview']['tmp_name'], '' . $path);
 
     }
+
 }

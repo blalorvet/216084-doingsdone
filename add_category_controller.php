@@ -16,11 +16,12 @@ foreach ($required as $key) {
 
     }
 }
-
+$value_errors = '';
 $db_cat_name = trim($_POST['add_new_category']);
 foreach ($categories as $category){
     if ($category['name']== $db_cat_name){
         $cat_errors['add_new_category'] = 'Такой проект уже существует';
+        $value_errors = $category['name'];
         break;
     }
 }
@@ -46,7 +47,8 @@ if (count($cat_errors)) {
     $layout_way_to_page = 'templates/layout.php';
 
     $popap_add_task = render('templates/add_category.php', [
-        'cat_errors' => $cat_errors['add_new_category']
+        'cat_errors' => $cat_errors['add_new_category'],
+        'value_errors' => $value_errors
     ]);
 
 } else {

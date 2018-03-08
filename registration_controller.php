@@ -1,8 +1,8 @@
 <?php
 //Форма регистрации - проверка полей на заполнение, валидность и отправка данных в БД
-/** @var $reg_errors string[] */
 
 
+$reg_errors = [];
 $form = $_POST;
 $required = ['reg_email', 'reg_password', 'reg_name'];
 
@@ -36,7 +36,7 @@ if (count($reg_errors)) {
 
     $layout_way_to_page = 'templates/guest.php';
     $popap_add_task = render('templates/registration.php',
-        ['form' => $form, 'reg_errors' => $reg_errors, 'users' => $users]);
+        ['form' => $form, 'reg_errors' => $reg_errors]);
 } else {
 
     header("Location: /index.php?enter");

@@ -71,6 +71,8 @@ if (isset($_POST['reg_form'])) {
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
     include_once 'add_task_controller.php';
+    
+
 }
 
 //Добавление новой КАТЕГОРИИ  - Из запроса POST забираем обязательные для заполнения поля
@@ -215,7 +217,7 @@ if (isset($_GET['add_category']) || (count($errors))) {
 }
 
 
-//Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий и
+//Добавление новой задачи  - Проверяем есть ли в строке запрос add_task и если есть то показываем попап, передаем ошибки если они есть, список возможных категорий
 if (isset($_GET['add_task']) || (count($errors))) {
     if (!isset($_SESSION['user'])) {
         $layout_way_to_page = 'templates/guest.php';
@@ -226,6 +228,7 @@ if (isset($_GET['add_task']) || (count($errors))) {
             'categories' => $categories,
             'task_fields' => $task_fields
         ]);
+
     }
 
 }

@@ -44,13 +44,13 @@
                     <option
                         value="<?= $category['id']; ?>">
                         <?= html_sc($category['name']) ?>
-                        <?= isset($task_fields['project']) && $task_fields['project'] = $category ['name'] ? 'selected' : "" ?>
+                        <?= isset($task_fields['project']) && $task_fields['project'] == $category ['name'] ? 'selected' : "" ?>
                     </option>
                 <?php endforeach; ?>
 
             </select>
 
-            <p class="<?= isset($errors['project']) ? "form__message" : ""; ?>">Заполните это поле</p>
+            <p class="<?= isset($errors['project']) ? "form__message" : ""; ?>"><?= isset($errors['project']) ? $errors['project'] : ""; ?></p>
 
         </div>
 

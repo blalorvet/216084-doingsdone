@@ -71,7 +71,7 @@ if (isset($_POST['reg_form'])) {
 //Добавление новой задачи  - Из запроса POST забираем обязательные для заполнения поля
 if (isset($_POST['add_task'])) {
     include_once 'add_task_controller.php';
-    
+
 
 }
 
@@ -240,9 +240,11 @@ if (!isset($_GET['category'])) {  // вернет истину если нет �
 } else {
     $category_get_id = (int)$_GET['category'];// приводим  к целому числу
 
+ var_dump($_GET['category']);
 
     if ($categories[$category_get_id] === $categories[0]) { // Если равно нулю, то выводим все задачи
         $filtered_task = $tasks;
+
     }
 
     foreach ($tasks as $key => $task) {
